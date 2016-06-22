@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["DebugInfos","A Debug structure to help debugging :)"],["Interpreter","The main interpreter, execute instructions, read from input, write to output"],["Statement","Type used to return the opcode executed with its execution status"]]});

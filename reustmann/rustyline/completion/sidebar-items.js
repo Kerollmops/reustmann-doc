@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["extract_word",""]],"struct":[["FilenameCompleter",""]],"trait":[["Completer","To be called for tab-completion."]]});

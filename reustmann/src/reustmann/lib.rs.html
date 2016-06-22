@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="Source to the Rust file `/home/travis/build/Kerosene2000/Reustmann/src/lib.rs`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang">
+
+    <title>lib.rs.html -- source</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content source"><pre class="line-numbers"><span id="1">  1</span>
+<span id="2">  2</span>
+<span id="3">  3</span>
+<span id="4">  4</span>
+<span id="5">  5</span>
+<span id="6">  6</span>
+<span id="7">  7</span>
+<span id="8">  8</span>
+<span id="9">  9</span>
+<span id="10"> 10</span>
+<span id="11"> 11</span>
+<span id="12"> 12</span>
+<span id="13"> 13</span>
+<span id="14"> 14</span>
+<span id="15"> 15</span>
+<span id="16"> 16</span>
+<span id="17"> 17</span>
+<span id="18"> 18</span>
+<span id="19"> 19</span>
+<span id="20"> 20</span>
+<span id="21"> 21</span>
+<span id="22"> 22</span>
+<span id="23"> 23</span>
+<span id="24"> 24</span>
+<span id="25"> 25</span>
+<span id="26"> 26</span>
+<span id="27"> 27</span>
+<span id="28"> 28</span>
+<span id="29"> 29</span>
+<span id="30"> 30</span>
+<span id="31"> 31</span>
+<span id="32"> 32</span>
+<span id="33"> 33</span>
+<span id="34"> 34</span>
+<span id="35"> 35</span>
+<span id="36"> 36</span>
+<span id="37"> 37</span>
+<span id="38"> 38</span>
+<span id="39"> 39</span>
+<span id="40"> 40</span>
+<span id="41"> 41</span>
+<span id="42"> 42</span>
+<span id="43"> 43</span>
+<span id="44"> 44</span>
+<span id="45"> 45</span>
+<span id="46"> 46</span>
+<span id="47"> 47</span>
+<span id="48"> 48</span>
+<span id="49"> 49</span>
+<span id="50"> 50</span>
+<span id="51"> 51</span>
+<span id="52"> 52</span>
+<span id="53"> 53</span>
+<span id="54"> 54</span>
+<span id="55"> 55</span>
+<span id="56"> 56</span>
+<span id="57"> 57</span>
+<span id="58"> 58</span>
+<span id="59"> 59</span>
+<span id="60"> 60</span>
+<span id="61"> 61</span>
+<span id="62"> 62</span>
+<span id="63"> 63</span>
+<span id="64"> 64</span>
+<span id="65"> 65</span>
+<span id="66"> 66</span>
+<span id="67"> 67</span>
+<span id="68"> 68</span>
+<span id="69"> 69</span>
+<span id="70"> 70</span>
+<span id="71"> 71</span>
+<span id="72"> 72</span>
+<span id="73"> 73</span>
+<span id="74"> 74</span>
+<span id="75"> 75</span>
+<span id="76"> 76</span>
+<span id="77"> 77</span>
+<span id="78"> 78</span>
+<span id="79"> 79</span>
+<span id="80"> 80</span>
+<span id="81"> 81</span>
+<span id="82"> 82</span>
+<span id="83"> 83</span>
+<span id="84"> 84</span>
+<span id="85"> 85</span>
+<span id="86"> 86</span>
+<span id="87"> 87</span>
+<span id="88"> 88</span>
+<span id="89"> 89</span>
+<span id="90"> 90</span>
+<span id="91"> 91</span>
+<span id="92"> 92</span>
+<span id="93"> 93</span>
+<span id="94"> 94</span>
+<span id="95"> 95</span>
+<span id="96"> 96</span>
+<span id="97"> 97</span>
+<span id="98"> 98</span>
+<span id="99"> 99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+</pre><pre class='rust '>
+<span class='doccomment'>//! ## Overview</span>
+<span class='doccomment'>//! The Reustmann machine is a tiny programming language and abstract processing</span>
+<span class='doccomment'>//! engine designed for educational use for experimentation with automatic program generation.</span>
+<span class='doccomment'>//! It has the following properties:</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! - Any bit pattern in Reustmann memory is a legal Reustmann program – there are no instruction faults</span>
+<span class='doccomment'>//! - All operations address existing memory – there are no memory faults</span>
+<span class='doccomment'>//! - Reustmann source code consists of a string of characters, one character per instruction</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! A corollary is that any string of random characters is the source code for a legal,</span>
+<span class='doccomment'>//! executable Reustmann program.</span>
+<span class='doccomment'>//! This allows, for example, a genetic algorithm to use an Reustmann program in source form as its genome,</span>
+<span class='doccomment'>//! evolving the source code string until the Reustmann program produces the desired output.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ## Architecture</span>
+<span class='doccomment'>//! The Reustmann abstract machine is a Von Neumann architecture where all memory</span>
+<span class='doccomment'>//! locations are accessed through a program counter (**PC**) or stack pointer (**SP**).</span>
+<span class='doccomment'>//! The machine architecture can be characterized as a processor with three special-purpose registers (**PC**, **SP**, and **NZ** flag),</span>
+<span class='doccomment'>//! **L** memory locations (&quot;words&quot;) **W** bits wide, and an instruction set of about 40 opcodes.</span>
+<span class='doccomment'>//! All possible states of memory and registers comprise legal Reustmann programs</span>
+<span class='doccomment'>//! – there is no possibility of an illegal instruction or a memory fault.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! Allowing all possible bit patterns to result in legal (but not necessarily interesting)</span>
+<span class='doccomment'>//! programs simplifies experimentation with automatic program generation.</span>
+<span class='doccomment'>//! AI programs, such as neural nets and genetic algorithms,</span>
+<span class='doccomment'>//! can regard Reustmann programs as arbitrary bit patterns, evaluate them with an Reustmann simulator,</span>
+<span class='doccomment'>//! and compare the results against some fitness metric, without concern for syntactic program correctness.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! The Reustmann language is similar to a rudimentary assembly language.</span>
+<span class='doccomment'>//! Reustmann source code can be expressed using either long or short mnemonics.</span>
+<span class='doccomment'>//! Here is a simple Reustmann program that copies its input to its output as long as</span>
+<span class='doccomment'>//! the data is nonzero, shown with long mnemonics with added comments:</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ```ignore</span>
+<span class='doccomment'>//! LOOP    // loop until the ENDL opcode</span>
+<span class='doccomment'>//! IN      // read one char from stdin and push it on the stack</span>
+<span class='doccomment'>//! BNZ     // skip the next instruction if nonzero</span>
+<span class='doccomment'>//! HALT    // HALT</span>
+<span class='doccomment'>//! OUT     // pop a word from the stack and write it to stdout</span>
+<span class='doccomment'>//! ENDL    // loop forever</span>
+<span class='doccomment'>//! ```</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! All memory addressing is through the stack pointer (**SP**) and is implied in each instruction,</span>
+<span class='doccomment'>//! so there are no operands specified in the source code.</span>
+<span class='doccomment'>//! Using the short mnemonics, each Reustmann instruction can be represented by a single character,</span>
+<span class='doccomment'>//! and is the preferred format for entering and saving programs.</span>
+<span class='doccomment'>//! The sample program above is represented in source code form using short mnemonics as the string:</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! `LIzHO]`</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! An Reustmann abstract machine contains **L** memory locations, **W** bits wide, where</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! `1 ≤ L ≤ 2^32` and `6 ≤ W ≤ 32`.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! This Reustmann architecture specifies a set of possible abstract machines,</span>
+<span class='doccomment'>//! where the rank of a machine is determined by unique combinations of **L** and **W**.</span>
+<span class='doccomment'>//! An Reustmann program runs differently on machines of different ranks.</span>
+<span class='doccomment'>//! For example, an Reustmann program that runs correctly on an abstract machine</span>
+<span class='doccomment'>//! of rank `L = 16`, `W = 16` will not necessarily produce the same results on a machine</span>
+<span class='doccomment'>//! with rank `L = 20`, `W = 8`.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ## Memory and addressing model</span>
+<span class='doccomment'>//! The **L** words of memory are addressed as locations 0 through **L** – 1.</span>
+<span class='doccomment'>//! The Stack Pointer (**SP**) seamlessly wraps around, treating the entire</span>
+<span class='doccomment'>//! address space as a circular buffer. Address calculations relating to the</span>
+<span class='doccomment'>//! Program Counter (**PC**) (e.g., branch targets) are performed using unsigned 32-bit</span>
+<span class='doccomment'>//! arithmetic and then adjusted if necessary to fit in the range [0 .. **L**).</span>
+<span class='doccomment'>//! When the **PC** would have been advanced to address A where A &gt; **L**, the address is</span>
+<span class='doccomment'>//! immediately readjusted to the address modulo **L**. This implies that it is</span>
+<span class='doccomment'>//! impossible to address a non-existent memory location.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! Each memory location can store unsigned values in the range [0 .. 2 **W**).</span>
+<span class='doccomment'>//! The memory locations are all writable. Instruction opcodes are stored in</span>
+<span class='doccomment'>//! memory by their numeric values as defined below.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ## Execution model</span>
+<span class='doccomment'>//! After machine reset, the three Reustmann registers have these initial values,</span>
+<span class='doccomment'>//! and are described in more detail in a later section.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! `PC = 0`, `SP = 0` and `NZ = false`</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! For each simulation cycle, if the value at the memory location indexed by</span>
+<span class='doccomment'>//! **PC** is a defined opcode number, the opcode is executed in simulation</span>
+<span class='doccomment'>//! as described in the tables below. If the memory location indexed by **PC**</span>
+<span class='doccomment'>//! is not a defined opcode number, it is executed as if it were a NOP opcode.</span>
+<span class='doccomment'>//! This implies there are no instruction faults.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ## Input and Output</span>
+<span class='doccomment'>//! The Reustmann instruction set has one IN and one OUT instruction.</span>
+<span class='doccomment'>//! These are character-oriented, regardless of the</span>
+<span class='doccomment'>//! value of **W**. Each time an IN instruction is executed, one character is</span>
+<span class='doccomment'>//! consumed from a user-specified input string or stream and pushed onto the</span>
+<span class='doccomment'>//! Reustmann stack, narrowing or widening the value to **W** bits. Each OUT</span>
+<span class='doccomment'>//! instruction pops the top of the Reustmann stack, casts the value to a (char)</span>
+<span class='doccomment'>//! type, and sends it to the abstract output stream.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ## Source Code Representation</span>
+<span class='doccomment'>//! For Reustmann machines of rank **W** ≤ 8, the preferred source code format</span>
+<span class='doccomment'>//! is a string of characters of length ≤ L. When loaded into Reustmann memory,</span>
+<span class='doccomment'>//! the source string S is interpreted as follows:</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ```ignore</span>
+<span class='doccomment'>//! for each character C in S:</span>
+<span class='doccomment'>//!     if C is a defined short mnemonic:</span>
+<span class='doccomment'>//!         store the opcode by opcode number</span>
+<span class='doccomment'>//!     else</span>
+<span class='doccomment'>//!         store the character value narrowed to W bits</span>
+<span class='doccomment'>//! ```</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! When a short-mnemonic source code disassembly is generated by an Reustmann abstract</span>
+<span class='doccomment'>//! machine of any rank, the listing will render each memory value N as a</span>
+<span class='doccomment'>//! single character as follows:</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ```ignore</span>
+<span class='doccomment'>//! if N is an assigned opcode number:</span>
+<span class='doccomment'>//!     show the short opcode mnemonic</span>
+<span class='doccomment'>//! else if N is representable as a single character:</span>
+<span class='doccomment'>//!     show the literal character</span>
+<span class='doccomment'>//! else:</span>
+<span class='doccomment'>//!     show a &#39;;&#39; (NOP) opcode</span>
+<span class='doccomment'>//! ```</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ### PC – Program Counter</span>
+<span class='doccomment'>//! The program counter **PC** contains a value in the range [0 .. **L**).</span>
+<span class='doccomment'>//! Values wrap around the address space, such that when the instruction execution</span>
+<span class='doccomment'>//! reaches the end of memory, execution by default continues at location zero.</span>
+<span class='doccomment'>//! After machine reset, the **PC** starts at zero, and by default, is incremented</span>
+<span class='doccomment'>//! by one after each instruction is executed. If any branching or looping opcode</span>
+<span class='doccomment'>//! results in a calculated address outside the range [0 .. **L**), the address is changed</span>
+<span class='doccomment'>//! to the calculated address modulo **L** so that it always refers to a valid memory location.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ## SP – Stack Pointer</span>
+<span class='doccomment'>//! The stack pointer **SP** contains a value in the range [0 .. **L**).</span>
+<span class='doccomment'>//! Values wrap around, so that the entire memory becomes a circular buffer for the **SP**.</span>
+<span class='doccomment'>//! After machine reset, the **SP** starts at zero, and always points at the last item</span>
+<span class='doccomment'>//! stacked (the “top” of the stack). The **SP** grows toward lower addresses.</span>
+<span class='doccomment'>//! If the **SP** changes to an address outside the range [0 .. **L**),</span>
+<span class='doccomment'>//! it is changed to the value modulo **L** so that it always refers to a valid memory location.</span>
+<span class='doccomment'>//! This implies that the first item pushed onto the stack after machine reset</span>
+<span class='doccomment'>//! will be written to the top of memory at location **L**-1, and the new **SP**</span>
+<span class='doccomment'>//! will contain the value **L**-1 and will grow downward from there.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ## NZ – Non-Zero Flag</span>
+<span class='doccomment'>//! The non-zero flag **NZ** reflects the non-zeroness of the most recent instruction</span>
+<span class='doccomment'>//! that read or wrote memory, as defined in the details below. **NZ** = true</span>
+<span class='doccomment'>//! means that the result was nonzero. The **NZ** flag can be tested with</span>
+<span class='doccomment'>//! the BZ and BNZ instructions. On machine reset, **NZ** is initialized to false.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ## Math</span>
+<span class='doccomment'>//! Values in memory are regarded as unsigned integers in the range [0 .. 2 **W**).</span>
+<span class='doccomment'>//! The arithmetic opcodes evaluate their operands as if using 32-bit unsigned</span>
+<span class='doccomment'>//! integers with the results truncated to the least significant **W** bits.</span>
+<span class='doccomment'>//! See individual opcodes below for more details.</span>
+<span class='doccomment'>//!</span>
+<span class='doccomment'>//! ## Copyright Information</span>
+<span class='doccomment'>//! Copyright 2012 David R. Miller.</span>
+<span class='doccomment'>//! Permission is granted to copy, distribute and/or modify this document under</span>
+<span class='doccomment'>//! the terms of the GNU Free Documentation License,</span>
+<span class='doccomment'>//! Version 1.3 or any later version published by the Free Software Foundation;</span>
+<span class='doccomment'>//! with no Invariant Sections, no Front-Cover Texts and no Back-Cover Texts.</span>
+<span class='doccomment'>//! A copy of the license is included in the accompanying</span>
+<span class='doccomment'>//! file named COPYING and online at http://www.gnu.org/licenses/fdl.txt.</span>
+
+<span class='comment'>// FIXME rename me Iota Machine ?!?!</span>
+<span class='comment'>// but this already exist !!!</span>
+<span class='kw'>mod</span> <span class='ident'>program</span>;
+<span class='kw'>mod</span> <span class='ident'>interpreter</span>;
+
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>instruction</span>;
+<span class='kw'>pub</span> <span class='kw'>mod</span> <span class='ident'>memory</span>;
+
+<span class='comment'>// /// All instructions used in the Reustmann architecture.</span>
+<span class='comment'>// pub use instruction::op_codes::OpCode;</span>
+<span class='comment'>// pub use instruction::{Mnemonic, LongMnemonic};</span>
+
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>program</span>::<span class='ident'>Program</span>;
+<span class='kw'>pub</span> <span class='kw'>use</span> <span class='ident'>interpreter</span>::{<span class='ident'>Interpreter</span>, <span class='ident'>Statement</span>, <span class='ident'>DebugInfos</span>};
+</pre>
+</section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "reustmann";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

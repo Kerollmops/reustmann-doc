@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `reustmann` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, reustmann">
+
+    <title>reustmann - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'></p><script>window.sidebarCurrent = {name: 'reustmann', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content mod">
+<h1 class='fqn'><span class='in-band'>Crate <a class='mod' href=''>reustmann</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-0' class='srclink' href='../src/reustmann/lib.rs.html#1-177' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'>
+<h2 id='overview' class='section-header'><a href='#overview'>Overview</a></h2>
+<p>The Reustmann machine is a tiny programming language and abstract processing
+engine designed for educational use for experimentation with automatic program generation.
+It has the following properties:</p>
+
+<ul>
+<li>Any bit pattern in Reustmann memory is a legal Reustmann program – there are no instruction faults</li>
+<li>All operations address existing memory – there are no memory faults</li>
+<li>Reustmann source code consists of a string of characters, one character per instruction</li>
+</ul>
+
+<p>A corollary is that any string of random characters is the source code for a legal,
+executable Reustmann program.
+This allows, for example, a genetic algorithm to use an Reustmann program in source form as its genome,
+evolving the source code string until the Reustmann program produces the desired output.</p>
+
+<h2 id='architecture' class='section-header'><a href='#architecture'>Architecture</a></h2>
+<p>The Reustmann abstract machine is a Von Neumann architecture where all memory
+locations are accessed through a program counter (<strong>PC</strong>) or stack pointer (<strong>SP</strong>).
+The machine architecture can be characterized as a processor with three special-purpose registers (<strong>PC</strong>, <strong>SP</strong>, and <strong>NZ</strong> flag),
+<strong>L</strong> memory locations (&quot;words&quot;) <strong>W</strong> bits wide, and an instruction set of about 40 opcodes.
+All possible states of memory and registers comprise legal Reustmann programs
+– there is no possibility of an illegal instruction or a memory fault.</p>
+
+<p>Allowing all possible bit patterns to result in legal (but not necessarily interesting)
+programs simplifies experimentation with automatic program generation.
+AI programs, such as neural nets and genetic algorithms,
+can regard Reustmann programs as arbitrary bit patterns, evaluate them with an Reustmann simulator,
+and compare the results against some fitness metric, without concern for syntactic program correctness.</p>
+
+<p>The Reustmann language is similar to a rudimentary assembly language.
+Reustmann source code can be expressed using either long or short mnemonics.
+Here is a simple Reustmann program that copies its input to its output as long as
+the data is nonzero, shown with long mnemonics with added comments:</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>LOOP</span>    <span class='comment'>// loop until the ENDL opcode</span>
+<span class='ident'>IN</span>      <span class='comment'>// read one char from stdin and push it on the stack</span>
+<span class='ident'>BNZ</span>     <span class='comment'>// skip the next instruction if nonzero</span>
+<span class='ident'>HALT</span>    <span class='comment'>// HALT</span>
+<span class='ident'>OUT</span>     <span class='comment'>// pop a word from the stack and write it to stdout</span>
+<span class='ident'>ENDL</span>    <span class='comment'>// loop forever</span></pre>
+
+<p>All memory addressing is through the stack pointer (<strong>SP</strong>) and is implied in each instruction,
+so there are no operands specified in the source code.
+Using the short mnemonics, each Reustmann instruction can be represented by a single character,
+and is the preferred format for entering and saving programs.
+The sample program above is represented in source code form using short mnemonics as the string:</p>
+
+<p><code>LIzHO]</code></p>
+
+<p>An Reustmann abstract machine contains <strong>L</strong> memory locations, <strong>W</strong> bits wide, where</p>
+
+<p><code>1 ≤ L ≤ 2^32</code> and <code>6 ≤ W ≤ 32</code>.</p>
+
+<p>This Reustmann architecture specifies a set of possible abstract machines,
+where the rank of a machine is determined by unique combinations of <strong>L</strong> and <strong>W</strong>.
+An Reustmann program runs differently on machines of different ranks.
+For example, an Reustmann program that runs correctly on an abstract machine
+of rank <code>L = 16</code>, <code>W = 16</code> will not necessarily produce the same results on a machine
+with rank <code>L = 20</code>, <code>W = 8</code>.</p>
+
+<h2 id='memory-and-addressing-model' class='section-header'><a href='#memory-and-addressing-model'>Memory and addressing model</a></h2>
+<p>The <strong>L</strong> words of memory are addressed as locations 0 through <strong>L</strong> – 1.
+The Stack Pointer (<strong>SP</strong>) seamlessly wraps around, treating the entire
+address space as a circular buffer. Address calculations relating to the
+Program Counter (<strong>PC</strong>) (e.g., branch targets) are performed using unsigned 32-bit
+arithmetic and then adjusted if necessary to fit in the range [0 .. <strong>L</strong>).
+When the <strong>PC</strong> would have been advanced to address A where A &gt; <strong>L</strong>, the address is
+immediately readjusted to the address modulo <strong>L</strong>. This implies that it is
+impossible to address a non-existent memory location.</p>
+
+<p>Each memory location can store unsigned values in the range [0 .. 2 <strong>W</strong>).
+The memory locations are all writable. Instruction opcodes are stored in
+memory by their numeric values as defined below.</p>
+
+<h2 id='execution-model' class='section-header'><a href='#execution-model'>Execution model</a></h2>
+<p>After machine reset, the three Reustmann registers have these initial values,
+and are described in more detail in a later section.</p>
+
+<p><code>PC = 0</code>, <code>SP = 0</code> and <code>NZ = false</code></p>
+
+<p>For each simulation cycle, if the value at the memory location indexed by
+<strong>PC</strong> is a defined opcode number, the opcode is executed in simulation
+as described in the tables below. If the memory location indexed by <strong>PC</strong>
+is not a defined opcode number, it is executed as if it were a NOP opcode.
+This implies there are no instruction faults.</p>
+
+<h2 id='input-and-output' class='section-header'><a href='#input-and-output'>Input and Output</a></h2>
+<p>The Reustmann instruction set has one IN and one OUT instruction.
+These are character-oriented, regardless of the
+value of <strong>W</strong>. Each time an IN instruction is executed, one character is
+consumed from a user-specified input string or stream and pushed onto the
+Reustmann stack, narrowing or widening the value to <strong>W</strong> bits. Each OUT
+instruction pops the top of the Reustmann stack, casts the value to a (char)
+type, and sends it to the abstract output stream.</p>
+
+<h2 id='source-code-representation' class='section-header'><a href='#source-code-representation'>Source Code Representation</a></h2>
+<p>For Reustmann machines of rank <strong>W</strong> ≤ 8, the preferred source code format
+is a string of characters of length ≤ L. When loaded into Reustmann memory,
+the source string S is interpreted as follows:</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>for</span> <span class='ident'>each</span> <span class='ident'>character</span> <span class='ident'>C</span> <span class='kw'>in</span> <span class='ident'>S</span>:
+    <span class='kw'>if</span> <span class='ident'>C</span> <span class='ident'>is</span> <span class='ident'>a</span> <span class='ident'>defined</span> <span class='ident'>short</span> <span class='ident'>mnemonic</span>:
+        <span class='ident'>store</span> <span class='ident'>the</span> <span class='ident'>opcode</span> <span class='ident'>by</span> <span class='ident'>opcode</span> <span class='ident'>number</span>
+    <span class='kw'>else</span>
+        <span class='ident'>store</span> <span class='ident'>the</span> <span class='ident'>character</span> <span class='ident'>value</span> <span class='ident'>narrowed</span> <span class='ident'>to</span> <span class='ident'>W</span> <span class='ident'>bits</span></pre>
+
+<p>When a short-mnemonic source code disassembly is generated by an Reustmann abstract
+machine of any rank, the listing will render each memory value N as a
+single character as follows:</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>if</span> <span class='ident'>N</span> <span class='ident'>is</span> <span class='ident'>an</span> <span class='ident'>assigned</span> <span class='ident'>opcode</span> <span class='ident'>number</span>:
+    <span class='ident'>show</span> <span class='ident'>the</span> <span class='ident'>short</span> <span class='ident'>opcode</span> <span class='ident'>mnemonic</span>
+<span class='kw'>else</span> <span class='kw'>if</span> <span class='ident'>N</span> <span class='ident'>is</span> <span class='ident'>representable</span> <span class='kw'>as</span> <span class='ident'>a</span> <span class='ident'>single</span> <span class='ident'>character</span>:
+    <span class='ident'>show</span> <span class='ident'>the</span> <span class='ident'>literal</span> <span class='ident'>character</span>
+<span class='kw'>else</span>:
+    <span class='ident'>show</span> <span class='ident'>a</span> <span class='string'>&#39;;&#39;</span> (<span class='ident'>NOP</span>) <span class='ident'>opcode</span></pre>
+
+<h3 id='pc--program-counter' class='section-header'><a href='#pc--program-counter'>PC – Program Counter</a></h3>
+<p>The program counter <strong>PC</strong> contains a value in the range [0 .. <strong>L</strong>).
+Values wrap around the address space, such that when the instruction execution
+reaches the end of memory, execution by default continues at location zero.
+After machine reset, the <strong>PC</strong> starts at zero, and by default, is incremented
+by one after each instruction is executed. If any branching or looping opcode
+results in a calculated address outside the range [0 .. <strong>L</strong>), the address is changed
+to the calculated address modulo <strong>L</strong> so that it always refers to a valid memory location.</p>
+
+<h2 id='sp--stack-pointer' class='section-header'><a href='#sp--stack-pointer'>SP – Stack Pointer</a></h2>
+<p>The stack pointer <strong>SP</strong> contains a value in the range [0 .. <strong>L</strong>).
+Values wrap around, so that the entire memory becomes a circular buffer for the <strong>SP</strong>.
+After machine reset, the <strong>SP</strong> starts at zero, and always points at the last item
+stacked (the “top” of the stack). The <strong>SP</strong> grows toward lower addresses.
+If the <strong>SP</strong> changes to an address outside the range [0 .. <strong>L</strong>),
+it is changed to the value modulo <strong>L</strong> so that it always refers to a valid memory location.
+This implies that the first item pushed onto the stack after machine reset
+will be written to the top of memory at location <strong>L</strong>-1, and the new <strong>SP</strong>
+will contain the value <strong>L</strong>-1 and will grow downward from there.</p>
+
+<h2 id='nz--non-zero-flag' class='section-header'><a href='#nz--non-zero-flag'>NZ – Non-Zero Flag</a></h2>
+<p>The non-zero flag <strong>NZ</strong> reflects the non-zeroness of the most recent instruction
+that read or wrote memory, as defined in the details below. <strong>NZ</strong> = true
+means that the result was nonzero. The <strong>NZ</strong> flag can be tested with
+the BZ and BNZ instructions. On machine reset, <strong>NZ</strong> is initialized to false.</p>
+
+<h2 id='math' class='section-header'><a href='#math'>Math</a></h2>
+<p>Values in memory are regarded as unsigned integers in the range [0 .. 2 <strong>W</strong>).
+The arithmetic opcodes evaluate their operands as if using 32-bit unsigned
+integers with the results truncated to the least significant <strong>W</strong> bits.
+See individual opcodes below for more details.</p>
+
+<h2 id='copyright-information' class='section-header'><a href='#copyright-information'>Copyright Information</a></h2>
+<p>Copyright 2012 David R. Miller.
+Permission is granted to copy, distribute and/or modify this document under
+the terms of the GNU Free Documentation License,
+Version 1.3 or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts and no Back-Cover Texts.
+A copy of the license is included in the accompanying
+file named COPYING and online at <a href="http://www.gnu.org/licenses/fdl.txt">http://www.gnu.org/licenses/fdl.txt</a>.</p>
+</div><h2 id='modules' class='section-header'><a href="#modules">Modules</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='instruction/index.html'
+                                  title='reustmann::instruction'>instruction</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='mod' href='memory/index.html'
+                                  title='reustmann::memory'>memory</a></td>
+                           <td class='docblock short'>
+                                
+                           </td>
+                       </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.DebugInfos.html'
+                                  title='reustmann::DebugInfos'>DebugInfos</a></td>
+                           <td class='docblock short'>
+                                <p>A Debug structure to help debugging :)</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Interpreter.html'
+                                  title='reustmann::Interpreter'>Interpreter</a></td>
+                           <td class='docblock short'>
+                                <p>The main interpreter, execute instructions, read from input,
+write to output</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Program.html'
+                                  title='reustmann::Program'>Program</a></td>
+                           <td class='docblock short'>
+                                <p>Give it to the Interpreter !</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='struct' href='struct.Statement.html'
+                                  title='reustmann::Statement'>Statement</a></td>
+                           <td class='docblock short'>
+                                <p>Type used to return the opcode executed with its execution status</p>
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "reustmann";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../jquery.js"></script>
+    <script src="../main.js"></script>
+    
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

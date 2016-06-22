@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["LongMnemonics","A struct containing all long names of each instruction."],["Mnemonics","A struct containing all mnemonic names of each instruction."],["OpCodes","A struct that get all instruction in bytes (used in the Interpreter)."]]});

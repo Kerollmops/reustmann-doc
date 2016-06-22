@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Instruction` enum in crate `reustmann`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Instruction">
+
+    <title>reustmann::instruction::Instruction - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'><a href='../index.html'>reustmann</a>::<wbr><a href='index.html'>instruction</a></p><script>window.sidebarCurrent = {name: 'Instruction', ty: 'enum', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content enum">
+<h1 class='fqn'><span class='in-band'>Enum <a href='../index.html'>reustmann</a>::<wbr><a href='index.html'>instruction</a>::<wbr><a class='enum' href=''>Instruction</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a id='src-384' class='srclink' href='../../src/reustmann/instruction/mod.rs.html#84-663' title='goto source code'>[src]</a></span></h1>
+<pre class='rust enum'>pub enum Instruction {
+    Nop,
+    Reset,
+    Halt,
+    In,
+    Out,
+    Pop,
+    Dup,
+    PushPc,
+    PopPc,
+    PopSp,
+    SpTgt,
+    PushNz,
+    Swap,
+    Push0,
+    Add,
+    Sub,
+    Inc,
+    Dec,
+    Mul,
+    Div,
+    Xor,
+    And,
+    Or,
+    Shl,
+    Shr,
+    Not,
+    Bz,
+    Bnz,
+    Beq,
+    Bgt,
+    Blt,
+    Bge,
+    Loop,
+    EndL,
+    BraN,
+    BraP,
+    Target,
+    Skip1,
+    Skip2,
+    Skip3,
+    Skip4,
+    Skip5,
+    Skip6,
+    Skip7,
+    Skip8,
+    Skip9,
+}</pre><div class='docblock'><p>These are the opcodes of the Reustmann instruction set,
+shown with their single-character mnemonics and long mnemonics.</p>
+</div><h2 class='variants'>Variants</h2>
+<table class='variants_table'><tr><td id='variant.Nop'><code>Nop</code></td><td><div class='docblock'><p>No-operation, do-nothing</p>
+
+<p>mnemonic: <code>;</code></p>
+
+<p>The NOP opcode may be encoded in memory by the value zero,
+or by any value not assigned to another opcode. During execution,
+all unassigned opcode values are mapped to the NOP instruction.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Reset'><code>Reset</code></td><td><div class='docblock'><p>Reset</p>
+
+<p>mnemonic: <code>R</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='number'>0</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='number'>0</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='boolval'>false</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Halt'><code>Halt</code></td><td><div class='docblock'><p>Halt program execution</p>
+
+<p>mnemonic: <code>H</code></p>
+
+<p>Causes program execution to stop.</p>
+</div></td><td></td></tr><tr><td id='variant.In'><code>In</code></td><td><div class='docblock'><p>Input a char from stdin, push it onto the stack</p>
+
+<p>mnemonic: <code>I</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>SP</span> <span class='op'>-</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='op'>*</span><span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>getchar</span>() <span class='ident'>trunc</span> <span class='ident'>W</span>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='boolval'>true</span> <span class='kw'>if</span> <span class='ident'>the</span> <span class='ident'>result</span> <span class='ident'>stacked</span> <span class='ident'>is</span> <span class='ident'>nonzero</span>, <span class='kw'>else</span> <span class='boolval'>false</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Out'><code>Out</code></td><td><div class='docblock'><p>Pop a word from the stack, output to stdout</p>
+
+<p>mnemonic: <code>O</code></p>
+
+<p>If the value on the top of the stack is outside the range of a char,
+it will be truncated to a char as it is output.
+This is inconsequential for Reustmann machines of rank W ≤ 8.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>putchar</span>((<span class='ident'>char</span>)<span class='op'>*</span><span class='ident'>SP</span>)
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>SP</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='boolval'>true</span> <span class='kw'>if</span> <span class='ident'>the</span> <span class='ident'>character</span> <span class='ident'>output</span> <span class='ident'>is</span> <span class='ident'>nonzero</span>, <span class='kw'>else</span> <span class='boolval'>false</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Pop'><code>Pop</code></td><td><div class='docblock'><p>Pop a word from the stack</p>
+
+<p>mnemonic: <code>p</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>SP</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='boolval'>true</span> <span class='kw'>if</span> <span class='ident'>the</span> <span class='ident'>item</span> <span class='ident'>popped</span> <span class='ident'>is</span> <span class='ident'>nonzero</span>, <span class='kw'>else</span> <span class='boolval'>false</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Dup'><code>Dup</code></td><td><div class='docblock'><p>Duplicate the last stacked value</p>
+
+<p>mnemonic: <code>D</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>Temp</span> <span class='op'>=</span> <span class='op'>*</span><span class='ident'>SP</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>SP</span> <span class='op'>-</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='op'>*</span><span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>Temp</span>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='boolval'>true</span> <span class='kw'>if</span> <span class='ident'>the</span> <span class='ident'>value</span> <span class='ident'>duplicated</span> <span class='ident'>is</span> <span class='ident'>nonzero</span>, <span class='kw'>else</span> <span class='boolval'>false</span></pre>
+</div></td><td></td></tr><tr><td id='variant.PushPc'><code>PushPc</code></td><td><div class='docblock'><p>Push the PC onto the stack</p>
+
+<p>mnemonic: <code>C</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>SP</span> <span class='op'>-</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='op'>*</span><span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='ident'>trunc</span> <span class='ident'>W</span>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.PopPc'><code>PopPc</code></td><td><div class='docblock'><p>Pop the PC from the stack</p>
+
+<p>mnemonic: <code>c</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='op'>*</span><span class='ident'>SP</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>SP</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.PopSp'><code>PopSp</code></td><td><div class='docblock'><p>Pop the SP from the stack</p>
+
+<p>mnemonic: <code>Y</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='op'>*</span><span class='ident'>SP</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.SpTgt'><code>SpTgt</code></td><td><div class='docblock'><p>Set the SP to the next TARGET opcode</p>
+
+<p>mnemonic: <code>G</code></p>
+
+<p>A search for the subsequent TARGET opcode is done at the time the SPTGT
+instruction is encountered, from the SPTGT instruction to memory location L - 1.
+The search does not wrap around. If no TARGET opcode is found,
+or if the PC is already at L - 1, the SPTGT is executed as if it were a NOP instruction.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>If</span> <span class='ident'>a</span> <span class='ident'>subsequent</span> <span class='ident'>TARGET</span> <span class='ident'>opcode</span> <span class='ident'>is</span> <span class='ident'>found</span>:
+    <span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>address</span> <span class='ident'>of</span> <span class='ident'>the</span> <span class='ident'>TARGET</span> <span class='ident'>opcode</span>
+<span class='kw'>else</span>:
+    <span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.PushNz'><code>PushNz</code></td><td><div class='docblock'><p>Push the NZ flag</p>
+
+<p>mnemonic: <code>P</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>SP</span> <span class='op'>-</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='op'>*</span><span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>NZ</span>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Swap'><code>Swap</code></td><td><div class='docblock'><p>Swap the top two items on the stack</p>
+
+<p>mnemonic: <code>S</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>Temp</span> <span class='op'>=</span> <span class='op'>*</span><span class='ident'>SP</span>
+<span class='op'>*</span><span class='ident'>SP</span> <span class='op'>=</span> <span class='op'>*</span>(<span class='ident'>SP</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>)
+<span class='op'>*</span>(<span class='ident'>SP</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>) <span class='op'>=</span> <span class='ident'>Temp</span>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Push0'><code>Push0</code></td><td><div class='docblock'><p>Push a zero onto the stack</p>
+
+<p>mnemonic: <code>0</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>SP</span> <span class='op'>-</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='op'>*</span><span class='ident'>SP</span> <span class='op'>=</span> <span class='number'>0</span>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='boolval'>false</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Add'><code>Add</code></td><td><div class='docblock'><p>Add the top two stacked words, push the result</p>
+
+<p>mnemonic: <code>+</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>SP</span> <span class='op'>-</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='op'>*</span><span class='ident'>SP</span> <span class='op'>=</span> (<span class='op'>*</span>(<span class='ident'>SP</span> <span class='op'>+</span> <span class='number'>2</span> <span class='kw'>mod</span> <span class='ident'>L</span>) <span class='op'>+</span> <span class='op'>*</span>(<span class='ident'>SP</span><span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>)) <span class='ident'>trunc</span> <span class='ident'>W</span>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='boolval'>true</span> <span class='kw'>if</span> <span class='ident'>the</span> <span class='ident'>result</span> <span class='ident'>is</span> <span class='ident'>nonzero</span>, <span class='kw'>else</span> <span class='boolval'>false</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Sub'><code>Sub</code></td><td><div class='docblock'><p>Subtract the top two stacked words and push the result</p>
+
+<p>mnemonic: <code>-</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>SP</span> <span class='op'>-</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='op'>*</span><span class='ident'>SP</span> <span class='op'>=</span> (<span class='op'>*</span>(<span class='ident'>SP</span> <span class='op'>+</span> <span class='number'>2</span> <span class='kw'>mod</span> <span class='ident'>L</span>) <span class='op'>-</span> <span class='op'>*</span>(<span class='ident'>SP</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>)) <span class='ident'>trunc</span> <span class='ident'>W</span>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='boolval'>true</span> <span class='kw'>if</span> <span class='ident'>the</span> <span class='ident'>result</span> <span class='ident'>is</span> <span class='ident'>nonzero</span>, <span class='kw'>else</span> <span class='boolval'>false</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Inc'><code>Inc</code></td><td><div class='docblock'><p>Increment the item at the top of the stack</p>
+
+<p>mnemonic: <code>.</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='op'>*</span><span class='ident'>SP</span> <span class='op'>=</span> (<span class='op'>*</span><span class='ident'>SP</span>) <span class='op'>+</span> <span class='number'>1</span> <span class='ident'>trunc</span> <span class='ident'>W</span>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='boolval'>true</span> <span class='kw'>if</span> <span class='ident'>the</span> <span class='ident'>result</span> <span class='ident'>is</span> <span class='ident'>nonzero</span>, <span class='kw'>else</span> <span class='boolval'>false</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Dec'><code>Dec</code></td><td><div class='docblock'><p>Decrement the item on the top of the stack</p>
+
+<p>mnemonic: <code>,</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='op'>*</span><span class='ident'>SP</span> <span class='op'>=</span> (<span class='op'>*</span><span class='ident'>SP</span>) <span class='op'>-</span> <span class='number'>1</span> <span class='ident'>trunc</span> <span class='ident'>W</span>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='boolval'>true</span> <span class='kw'>if</span> <span class='ident'>the</span> <span class='ident'>result</span> <span class='ident'>is</span> <span class='ident'>nonzero</span>, <span class='kw'>else</span> <span class='boolval'>false</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Mul'><code>Mul</code></td><td><div class='docblock'><p>Multiply the top two stacked words and push the result</p>
+
+<p>mnemonic: <code>*</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>SP</span> <span class='op'>-</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='op'>*</span><span class='ident'>SP</span><span class='op'>=</span> (<span class='op'>*</span>(<span class='ident'>SP</span> <span class='op'>+</span> <span class='number'>2</span> <span class='kw'>mod</span> <span class='ident'>L</span>) <span class='op'>*</span> (<span class='op'>*</span>(<span class='ident'>SP</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>)) <span class='ident'>trunc</span> <span class='ident'>W</span> <span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='boolval'>true</span> <span class='kw'>if</span> <span class='ident'>the</span> <span class='ident'>result</span> <span class='ident'>is</span> <span class='ident'>nonzero</span>, <span class='kw'>else</span> <span class='boolval'>false</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Div'><code>Div</code></td><td><div class='docblock'><p>Pop two words, divide, push the quotient and remainder</p>
+
+<p>mnemonic: <code>/</code></p>
+
+<p>If the divisor is zero, the quotient will be the maximum possible word value, and the remainder zero.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>Op0</span> <span class='op'>=</span> <span class='op'>*</span>(<span class='ident'>SP</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>)
+<span class='ident'>Op1</span> <span class='op'>=</span> <span class='op'>*</span><span class='ident'>SP</span>
+<span class='kw'>if</span> <span class='ident'>Op1</span> <span class='ident'>is</span> <span class='ident'>zero</span>, <span class='ident'>change</span> <span class='ident'>Op0</span> <span class='ident'>to</span> <span class='ident'>the</span> <span class='ident'>maximum</span> <span class='ident'>value</span> <span class='ident'>and</span> <span class='ident'>Op1</span> <span class='ident'>to</span> <span class='number'>1</span> <span class='op'>*</span>(<span class='ident'>SP</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>) <span class='op'>=</span> <span class='ident'>quotient</span> <span class='ident'>of</span> <span class='ident'>Op0</span> <span class='op'>/</span> <span class='ident'>Op1</span> <span class='ident'>trunc</span> <span class='ident'>W</span>
+<span class='op'>*</span><span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>remainder</span> <span class='ident'>of</span> <span class='ident'>Op0</span> <span class='op'>/</span> <span class='ident'>Op1</span>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='boolval'>true</span> <span class='kw'>if</span> <span class='ident'>the</span> <span class='ident'>quotient</span> <span class='ident'>is</span> <span class='ident'>nonzero</span>, <span class='kw'>else</span> <span class='boolval'>false</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Xor'><code>Xor</code></td><td><div class='docblock'><p>Bitwise XOR the top two stacked words and push the result</p>
+
+<p>mnemonic: <code>^</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>SP</span> <span class='op'>-</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='op'>*</span><span class='ident'>SP</span> <span class='op'>=</span> (<span class='op'>*</span>(<span class='ident'>SP</span> <span class='op'>+</span> <span class='number'>2</span> <span class='kw'>mod</span> <span class='ident'>L</span>) <span class='ident'>XOR</span> <span class='op'>*</span>(<span class='ident'>SP</span> <span class='op'>+</span> <span class='number'>2</span> <span class='kw'>mod</span> <span class='ident'>L</span>)) <span class='ident'>trunc</span> <span class='ident'>W</span>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='boolval'>true</span> <span class='kw'>if</span> <span class='ident'>the</span> <span class='ident'>result</span> <span class='ident'>is</span> <span class='ident'>nonzero</span>, <span class='kw'>else</span> <span class='boolval'>false</span></pre>
+</div></td><td></td></tr><tr><td id='variant.And'><code>And</code></td><td><div class='docblock'><p>Bitwise AND the top two stacked words and push the result</p>
+
+<p>mnemonic: <code>&amp;</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>SP</span> <span class='op'>-</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='op'>*</span><span class='ident'>SP</span> <span class='op'>=</span> (<span class='op'>*</span>( <span class='ident'>SP</span> <span class='op'>+</span> <span class='number'>2</span> <span class='kw'>mod</span> <span class='ident'>L</span>) <span class='ident'>AND</span> <span class='op'>*</span>(<span class='ident'>SP</span> <span class='op'>+</span> <span class='number'>2</span> <span class='kw'>mod</span> <span class='ident'>L</span>)) <span class='ident'>trunc</span> <span class='ident'>W</span>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='boolval'>true</span> <span class='kw'>if</span> <span class='ident'>the</span> <span class='ident'>result</span> <span class='ident'>is</span> <span class='ident'>nonzero</span>, <span class='kw'>else</span> <span class='boolval'>false</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Or'><code>Or</code></td><td><div class='docblock'><p>Bitwise OR the top two stacked words and push the result</p>
+
+<p>mnemonic: <code>|</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>SP</span> <span class='op'>-</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='op'>*</span><span class='ident'>SP</span> <span class='op'>=</span> (<span class='op'>*</span>(<span class='ident'>SP</span> <span class='op'>+</span> <span class='number'>2</span> <span class='kw'>mod</span> <span class='ident'>L</span>) <span class='ident'>OR</span> <span class='op'>*</span>(<span class='ident'>SP</span> <span class='op'>+</span> <span class='number'>2</span> <span class='kw'>mod</span> <span class='ident'>L</span>)) <span class='ident'>trunc</span> <span class='ident'>W</span>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='boolval'>true</span> <span class='kw'>if</span> <span class='ident'>the</span> <span class='ident'>result</span> <span class='ident'>is</span> <span class='ident'>nonzero</span>, <span class='kw'>else</span> <span class='boolval'>false</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Shl'><code>Shl</code></td><td><div class='docblock'><p>Logical shift left</p>
+
+<p>mnemonic: <code>(</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='op'>*</span><span class='ident'>SP</span> <span class='op'>=</span> <span class='op'>*</span><span class='ident'>SP</span> <span class='op'>&lt;&lt;</span> <span class='number'>1</span> <span class='ident'>trunc</span> <span class='ident'>W</span>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='boolval'>true</span> <span class='kw'>if</span> <span class='ident'>the</span> <span class='ident'>result</span> <span class='ident'>is</span> <span class='ident'>nonzero</span>, <span class='kw'>else</span> <span class='boolval'>false</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Shr'><code>Shr</code></td><td><div class='docblock'><p>Logical shift right</p>
+
+<p>mnemonic: <code>)</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='op'>*</span><span class='ident'>SP</span> <span class='op'>=</span> <span class='op'>*</span><span class='ident'>SP</span> <span class='op'>&gt;&gt;</span> <span class='number'>1</span> <span class='ident'>trunc</span> <span class='ident'>W</span>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='boolval'>true</span> <span class='kw'>if</span> <span class='ident'>the</span> <span class='ident'>result</span> <span class='ident'>is</span> <span class='ident'>nonzero</span>, <span class='kw'>else</span> <span class='boolval'>false</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Not'><code>Not</code></td><td><div class='docblock'><p>Bitwise NOT</p>
+
+<p>mnemonic: <code>~</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='op'>*</span><span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>NOT</span> <span class='op'>*</span><span class='ident'>SP</span> <span class='ident'>trunc</span> <span class='ident'>W</span>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='boolval'>true</span> <span class='kw'>if</span> <span class='ident'>the</span> <span class='ident'>result</span> <span class='ident'>is</span> <span class='ident'>nonzero</span>, <span class='kw'>else</span> <span class='boolval'>false</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Bz'><code>Bz</code></td><td><div class='docblock'><p>Branch if zero (NZ flag is false)</p>
+
+<p>mnemonic: <code>Z</code></p>
+
+<p>Skips one opcode if NZ is false.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>if</span> <span class='ident'>NZ</span> <span class='ident'>is</span> <span class='boolval'>false</span>
+    <span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>2</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='kw'>else</span>
+    <span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span> <span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Bnz'><code>Bnz</code></td><td><div class='docblock'><p>Branch if nonzero (NZ flag is true)</p>
+
+<p>mnemonic: <code>z</code></p>
+
+<p>Skips one opcode if NZ is true.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>if</span> <span class='ident'>NZ</span> <span class='ident'>is</span> <span class='boolval'>true</span>
+    <span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>2</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='kw'>else</span>
+    <span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span> <span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Beq'><code>Beq</code></td><td><div class='docblock'><p>Compare top two stacked words, branch if equal</p>
+
+<p>mnemonic: <code>=</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>if</span> <span class='op'>*</span>(<span class='ident'>SP</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>) .<span class='ident'>eq</span>. <span class='op'>*</span><span class='ident'>SP</span>
+    <span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span><span class='op'>+</span> <span class='number'>2</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='kw'>else</span>
+    <span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span> <span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Bgt'><code>Bgt</code></td><td><div class='docblock'><p>Compare top two stacked words, branch if greater than</p>
+
+<p>mnemonic: <code>&gt;</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>if</span> <span class='op'>*</span>(<span class='ident'>SP</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>) <span class='op'>&gt;</span> <span class='op'>*</span><span class='ident'>SP</span>
+    <span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>2</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='kw'>else</span>
+    <span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span> <span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Blt'><code>Blt</code></td><td><div class='docblock'><p>Compare top two stacked words, branch if less than</p>
+
+<p>mnemonic: <code>{</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>if</span> <span class='op'>*</span>(<span class='ident'>SP</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>) <span class='op'>&lt;</span> <span class='op'>*</span><span class='ident'>SP</span>
+    <span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>2</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='kw'>else</span>
+    <span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span> <span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Bge'><code>Bge</code></td><td><div class='docblock'><p>Compare top two stacked words, branch if greater than or equal</p>
+
+<p>mnemonic: <code>}</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>if</span> <span class='op'>*</span>(<span class='ident'>SP</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>) <span class='op'>&gt;=</span> <span class='op'>*</span> <span class='ident'>SP</span>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>2</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='kw'>else</span>
+    <span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span> <span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Loop'><code>Loop</code></td><td><div class='docblock'><p>Repeat the following instructions up to the next ENDL</p>
+
+<p>mnemonic: <code>L</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.EndL'><code>EndL</code></td><td><div class='docblock'><p>End of LOOP</p>
+
+<p>mnemonic: <code>]</code></p>
+
+<p>Execution resumes at the instruction following the preceding LOOP opcode.
+A search for the preceding LOOP opcode is done at the time the ENDL instruction is encountered,
+from the current PC to location 0. The search does not wrap around.
+If no LOOP opcode is found, or if the PC is already at location 0,
+the ENDL is executed as if it were a NOP instruction.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>if</span> <span class='ident'>there</span> <span class='ident'>is</span> <span class='ident'>a</span> <span class='ident'>preceding</span> <span class='ident'>LOOP</span> <span class='ident'>instruction</span>:
+    <span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>location</span> <span class='ident'>of</span> <span class='ident'>LOOP</span> <span class='ident'>opcode</span> <span class='op'>+</span> <span class='number'>1</span>
+<span class='kw'>else</span>:
+    <span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span> <span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.BraN'><code>BraN</code></td><td><div class='docblock'><p>Branch to the next TARGET opcode</p>
+
+<p>mnemonic: <code>B</code></p>
+
+<p>A search for the subsequent TARGET opcode is done at the time the BRAN instruction is encountered,
+from the BRAN instruction to memory location L - 1.
+The search does not wrap around. If no TARGET opcode is found,
+the BRAN is executed as if it were a NOP instruction.
+If the TARGET is found at memory location L - 1, execution will resume at location 0.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>if</span> <span class='ident'>there</span> <span class='ident'>is</span> <span class='ident'>a</span> <span class='ident'>subsequent</span> <span class='ident'>TARGET</span> <span class='ident'>instruction</span>:
+    <span class='ident'>PC</span> <span class='op'>=</span> (<span class='ident'>location</span> <span class='ident'>of</span> <span class='ident'>TARGET</span> <span class='ident'>opcode</span> <span class='op'>+</span> <span class='number'>1</span>) <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='kw'>else</span>:
+    <span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span> <span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.BraP'><code>BraP</code></td><td><div class='docblock'><p>Branch to the previous TARGET opcode</p>
+
+<p>mnemonic: <code>b</code></p>
+
+<p>A search for the previous TARGET opcode is done at the time the BRAP instruction is encountered,
+from the BRAP instruction to memory location 0. The search does not wrap around.\
+If no TARGET opcode is found or if the PC is already at location 0,
+the BRAP is executed as if it were a NOP. instruction.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='kw'>if</span> <span class='ident'>there</span> <span class='ident'>is</span> <span class='ident'>a</span> <span class='ident'>prior</span> <span class='ident'>TARGET</span> <span class='ident'>instruction</span>
+    <span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>location</span> <span class='ident'>of</span> <span class='ident'>TARGET</span> <span class='ident'>opcode</span> <span class='op'>+</span> <span class='number'>1</span>
+<span class='kw'>else</span>
+    <span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span> <span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Target'><code>Target</code></td><td><div class='docblock'><p>Branch target for BRAN and BRAP</p>
+
+<p>mnemonic: <code>T</code></p>
+
+<p>See SPTGT, BRAN, and BRAP instructions for the semantics.
+The TARGET opcode is just a marker, and is executed as if it were a NOP.</p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>1</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Skip1'><code>Skip1</code></td><td><div class='docblock'><p>Skip one instruction</p>
+
+<p>mnemonic: <code>1</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>2</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Skip2'><code>Skip2</code></td><td><div class='docblock'><p>Skip two instructions</p>
+
+<p>mnemonic: <code>2</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>3</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Skip3'><code>Skip3</code></td><td><div class='docblock'><p>Skip three instructions</p>
+
+<p>mnemonic: <code>3</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>4</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Skip4'><code>Skip4</code></td><td><div class='docblock'><p>Skip four instructions</p>
+
+<p>mnemonic: <code>4</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>5</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Skip5'><code>Skip5</code></td><td><div class='docblock'><p>Skip five instructions</p>
+
+<p>mnemonic: <code>5</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>6</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Skip6'><code>Skip6</code></td><td><div class='docblock'><p>Skip five instructions</p>
+
+<p>mnemonic: <code>6</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>7</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Skip7'><code>Skip7</code></td><td><div class='docblock'><p>Skip five instructions</p>
+
+<p>mnemonic: <code>7</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>8</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Skip8'><code>Skip8</code></td><td><div class='docblock'><p>Skip five instructions</p>
+
+<p>mnemonic: <code>8</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>9</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr><tr><td id='variant.Skip9'><code>Skip9</code></td><td><div class='docblock'><p>Skip five instructions</p>
+
+<p>mnemonic: <code>9</code></p>
+
+<pre class='rust rust-example-rendered'>
+<span class='ident'>PC</span> <span class='op'>=</span> <span class='ident'>PC</span> <span class='op'>+</span> <span class='number'>10</span> <span class='kw'>mod</span> <span class='ident'>L</span>
+<span class='ident'>SP</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span>
+<span class='ident'>NZ</span> <span class='op'>=</span> <span class='ident'>no</span> <span class='ident'>change</span></pre>
+</div></td><td></td></tr></table><h2 id='implementations'>Trait Implementations</h2><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='type' href='../../reustmann/instruction/mnemonics/type.Mnemonic.html' title='reustmann::instruction::mnemonics::Mnemonic'>Mnemonic</a>&gt; for <a class='enum' href='../../reustmann/instruction/enum.Instruction.html' title='reustmann::instruction::Instruction'>Instruction</a></code></h3><div class='impl-items'><h4 id='method.from' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(c: <a class='type' href='../../reustmann/instruction/mnemonics/type.Mnemonic.html' title='reustmann::instruction::mnemonics::Mnemonic'>Mnemonic</a>) -&gt; Self</code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html' title='core::convert::From'>From</a>&lt;<a class='type' href='../../reustmann/instruction/op_codes/type.OpCode.html' title='reustmann::instruction::op_codes::OpCode'>OpCode</a>&gt; for <a class='enum' href='../../reustmann/instruction/enum.Instruction.html' title='reustmann::instruction::Instruction'>Instruction</a></code></h3><div class='impl-items'><h4 id='method.from-1' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/convert/trait.From.html#tymethod.from' class='fnname'>from</a>(c: <a class='type' href='../../reustmann/instruction/op_codes/type.OpCode.html' title='reustmann::instruction::op_codes::OpCode'>OpCode</a>) -&gt; Self</code></h4>
+</div><h3 id='derived_implementations'>Derived Implementations </h3><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/marker/trait.Copy.html' title='core::marker::Copy'>Copy</a> for <a class='enum' href='../../reustmann/instruction/enum.Instruction.html' title='reustmann::instruction::Instruction'>Instruction</a></code></h3><div class='impl-items'></div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html' title='core::clone::Clone'>Clone</a> for <a class='enum' href='../../reustmann/instruction/enum.Instruction.html' title='reustmann::instruction::Instruction'>Instruction</a></code></h3><div class='impl-items'><h4 id='method.clone' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class='enum' href='../../reustmann/instruction/enum.Instruction.html' title='reustmann::instruction::Instruction'>Instruction</a></code></h4>
+<h4 id='method.clone_from' class='method'><span class="since">1.0.0</span><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: &amp;Self)</code></h4>
+</div><h3 class='impl'><code>impl <a class='trait' href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html' title='core::fmt::Debug'>Debug</a> for <a class='enum' href='../../reustmann/instruction/enum.Instruction.html' title='reustmann::instruction::Instruction'>Instruction</a></code></h3><div class='impl-items'><h4 id='method.fmt' class='method'><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class='struct' href='https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html' title='core::fmt::Formatter'>Formatter</a>) -&gt; <a class='type' href='https://doc.rust-lang.org/nightly/core/fmt/type.Result.html' title='core::fmt::Result'>Result</a></code></h4>
+</div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "reustmann";
+        window.playgroundUrl = "";
+    </script>
+    <script src="../../jquery.js"></script>
+    <script src="../../main.js"></script>
+    
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>
