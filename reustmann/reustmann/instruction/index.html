@@ -47,7 +47,7 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-231' class='srclink' href='../../src/reustmann/instruction/mod.rs.html#1-991' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-218' class='srclink' href='../../src/reustmann/instruction/mod.rs.html#1-991' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'>
 <h2 id='instruction-set-summary' class='section-header'><a href='#instruction-set-summary'>Instruction Set Summary</a></h2>
 <p>These are the opcodes of the Reustmann instruction set, shown with their
@@ -83,7 +83,7 @@ single-character mnemonics and long mnemonics.</p>
     <span class='op'>|</span>       <span class='ident'>OR</span>      <span class='ident'>Bitwise</span> <span class='ident'>logical</span> <span class='ident'>OR</span>
     (       <span class='ident'>SHL</span>     <span class='ident'>Logical</span> <span class='ident'>shift</span> <span class='ident'>left</span> <span class='ident'>the</span> <span class='ident'>top</span> <span class='ident'>stacked</span> <span class='ident'>word</span>
     )       <span class='ident'>SHR</span>     <span class='ident'>Logical</span> <span class='ident'>shift</span> <span class='ident'>right</span> <span class='ident'>the</span> <span class='ident'>top</span> <span class='ident'>stacked</span> <span class='ident'>word</span>
-    <span class='kw-2'>~</span>       <span class='ident'>NOT</span>     <span class='ident'>Bitwise</span> <span class='ident'>invert</span> <span class='ident'>the</span> <span class='ident'>top</span> <span class='ident'>stacked</span> <span class='ident'>word</span></pre>
+    ~       <span class='ident'>NOT</span>     <span class='ident'>Bitwise</span> <span class='ident'>invert</span> <span class='ident'>the</span> <span class='ident'>top</span> <span class='ident'>stacked</span> <span class='ident'>word</span></pre>
 
 <h3 id='conditionals' class='section-header'><a href='#conditionals'>Conditionals</a></h3>
 <pre class='rust rust-example-rendered'>
@@ -185,6 +185,8 @@ or will be interpreted as NOP</p>
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

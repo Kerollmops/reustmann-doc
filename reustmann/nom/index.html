@@ -99,7 +99,7 @@ streaming patterns, and as much as possible zero copy.</p>
 <span class='comment'>// we define acc as mutable to update its value whenever a new term is found</span>
 <span class='macro'>named</span><span class='macro'>!</span>(<span class='ident'>term</span> <span class='op'>&lt;</span><span class='ident'>i64</span><span class='op'>&gt;</span>,
   <span class='macro'>chain</span><span class='macro'>!</span>(
-    <span class='kw-2'>mut</span> <span class='ident'>acc</span>: <span class='ident'>factor</span>  <span class='kw-2'>~</span>
+    <span class='kw-2'>mut</span> <span class='ident'>acc</span>: <span class='ident'>factor</span>  ~
              <span class='macro'>many0</span><span class='macro'>!</span>(
                <span class='macro'>alt</span><span class='macro'>!</span>(
                  <span class='macro'>tap</span><span class='macro'>!</span>(<span class='ident'>mul</span>: <span class='macro'>preceded</span><span class='macro'>!</span>(<span class='macro'>tag</span><span class='macro'>!</span>(<span class='string'>&quot;*&quot;</span>), <span class='ident'>factor</span>) <span class='op'>=&gt;</span> <span class='ident'>acc</span> <span class='op'>=</span> <span class='ident'>acc</span> <span class='op'>*</span> <span class='ident'>mul</span>) <span class='op'>|</span>
@@ -112,7 +112,7 @@ streaming patterns, and as much as possible zero copy.</p>
 
 <span class='macro'>named</span><span class='macro'>!</span>(<span class='ident'>expr</span> <span class='op'>&lt;</span><span class='ident'>i64</span><span class='op'>&gt;</span>,
   <span class='macro'>chain</span><span class='macro'>!</span>(
-    <span class='kw-2'>mut</span> <span class='ident'>acc</span>: <span class='ident'>term</span>  <span class='kw-2'>~</span>
+    <span class='kw-2'>mut</span> <span class='ident'>acc</span>: <span class='ident'>term</span>  ~
              <span class='macro'>many0</span><span class='macro'>!</span>(
                <span class='macro'>alt</span><span class='macro'>!</span>(
                  <span class='macro'>tap</span><span class='macro'>!</span>(<span class='ident'>add</span>: <span class='macro'>preceded</span><span class='macro'>!</span>(<span class='macro'>tag</span><span class='macro'>!</span>(<span class='string'>&quot;+&quot;</span>), <span class='ident'>term</span>) <span class='op'>=&gt;</span> <span class='ident'>acc</span> <span class='op'>=</span> <span class='ident'>acc</span> <span class='op'>+</span> <span class='ident'>add</span>) <span class='op'>|</span>
@@ -1425,6 +1425,8 @@ otherwise a little endian u64 integer</p>
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

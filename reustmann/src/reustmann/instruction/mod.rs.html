@@ -1749,8 +1749,8 @@
             <span class='op'>|</span> <span class='ident'>op_codes</span>::<span class='ident'>SKIP6</span>
             <span class='op'>|</span> <span class='ident'>op_codes</span>::<span class='ident'>SKIP7</span>
             <span class='op'>|</span> <span class='ident'>op_codes</span>::<span class='ident'>SKIP8</span>
-            <span class='op'>|</span> <span class='ident'>op_codes</span>::<span class='ident'>SKIP9</span> <span class='op'>=&gt;</span> <span class='boolval'>true</span>,
-            _ <span class='op'>=&gt;</span> <span class='boolval'>false</span>
+            <span class='op'>|</span> <span class='ident'>op_codes</span>::<span class='ident'>SKIP9</span> <span class='op'>=&gt;</span> <span class='boolvalue'>true</span>,
+            _ <span class='op'>=&gt;</span> <span class='boolvalue'>false</span>
         }
 }
 
@@ -1803,13 +1803,13 @@
             <span class='op'>|</span> <span class='ident'>mnemonics</span>::<span class='ident'>SKIP6</span>
             <span class='op'>|</span> <span class='ident'>mnemonics</span>::<span class='ident'>SKIP7</span>
             <span class='op'>|</span> <span class='ident'>mnemonics</span>::<span class='ident'>SKIP8</span>
-            <span class='op'>|</span> <span class='ident'>mnemonics</span>::<span class='ident'>SKIP9</span> <span class='op'>=&gt;</span> <span class='boolval'>true</span>,
-            _ <span class='op'>=&gt;</span> <span class='boolval'>false</span>
+            <span class='op'>|</span> <span class='ident'>mnemonics</span>::<span class='ident'>SKIP9</span> <span class='op'>=&gt;</span> <span class='boolvalue'>true</span>,
+            _ <span class='op'>=&gt;</span> <span class='boolvalue'>false</span>
         }
 }
 
 <span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>Mnemonic</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Instruction</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>c</span>: <span class='ident'>Mnemonic</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
+    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>c</span>: <span class='ident'>Mnemonic</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
         <span class='kw'>match</span> <span class='ident'>c</span> {
            <span class='ident'>mnemonics</span>::<span class='ident'>RESET</span>  <span class='op'>=&gt;</span> <span class='ident'>Reset</span>,
            <span class='ident'>mnemonics</span>::<span class='ident'>HALT</span>   <span class='op'>=&gt;</span> <span class='ident'>Halt</span>,
@@ -1862,7 +1862,7 @@
 }
 
 <span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>Instruction</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Mnemonic</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>i</span>: <span class='ident'>Instruction</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
+    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>i</span>: <span class='ident'>Instruction</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
         <span class='kw'>match</span> <span class='ident'>i</span> {
             <span class='ident'>Nop</span>    <span class='op'>=&gt;</span> <span class='ident'>mnemonics</span>::<span class='ident'>NOP</span>,
             <span class='ident'>Reset</span>  <span class='op'>=&gt;</span> <span class='ident'>mnemonics</span>::<span class='ident'>RESET</span>,
@@ -1915,7 +1915,7 @@
 }
 
 <span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>OpCode</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>Instruction</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>c</span>: <span class='ident'>OpCode</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
+    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>c</span>: <span class='ident'>OpCode</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
         <span class='kw'>match</span> <span class='ident'>c</span> {
             <span class='ident'>op_codes</span>::<span class='ident'>RESET</span>  <span class='op'>=&gt;</span> <span class='ident'>Reset</span>,
             <span class='ident'>op_codes</span>::<span class='ident'>HALT</span>   <span class='op'>=&gt;</span> <span class='ident'>Halt</span>,
@@ -1968,13 +1968,13 @@
 }
 
 <span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>Instruction</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='ident'>OpCode</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>i</span>: <span class='ident'>Instruction</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
+    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>i</span>: <span class='ident'>Instruction</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
         <span class='ident'>i</span> <span class='kw'>as</span> <span class='ident'>OpCode</span>
     }
 }
 
 <span class='kw'>impl</span> <span class='ident'>From</span><span class='op'>&lt;</span><span class='ident'>Instruction</span><span class='op'>&gt;</span> <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='lifetime'>&#39;static</span> <span class='ident'>str</span> {
-    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>c</span>: <span class='ident'>Instruction</span>) <span class='op'>-&gt;</span> <span class='kw'>Self</span> {
+    <span class='kw'>fn</span> <span class='ident'>from</span>(<span class='ident'>c</span>: <span class='ident'>Instruction</span>) <span class='op'>-&gt;</span> <span class='self'>Self</span> {
         <span class='kw'>match</span> <span class='ident'>c</span> {
             <span class='ident'>Nop</span>     <span class='op'>=&gt;</span> <span class='ident'>long_mnemonics</span>::<span class='ident'>NOP</span>,
             <span class='ident'>Reset</span>   <span class='op'>=&gt;</span> <span class='ident'>long_mnemonics</span>::<span class='ident'>RESET</span>,
@@ -2049,6 +2049,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

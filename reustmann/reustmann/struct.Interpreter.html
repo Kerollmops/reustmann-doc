@@ -47,12 +47,13 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a id='src-67' class='srclink' href='../src/reustmann/interpreter.rs.html#28-34' title='goto source code'>[src]</a></span></h1>
+               </span><a id='src-65' class='srclink' href='../src/reustmann/interpreter.rs.html#28-34' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct Interpreter {
     // some fields omitted
 }</pre><div class='docblock'><p>The main interpreter, execute instructions, read from input,
 write to output</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><code>impl <a class='struct' href='../reustmann/struct.Interpreter.html' title='reustmann::Interpreter'>Interpreter</a></code></h3><div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(arch_length: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, arch_width: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../reustmann/struct.Interpreter.html' title='reustmann::Interpreter'>Interpreter</a>, &amp;'static <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></h4>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class='struct' href='../reustmann/struct.Interpreter.html' title='reustmann::Interpreter'>Interpreter</a></code></span><span class='out-of-band'><div class='ghost'></div><a id='src-71' class='srclink' href='../src/reustmann/interpreter.rs.html#36-495' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class='method'><code>fn <a href='#method.new' class='fnname'>new</a>(arch_length: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>, arch_width: <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.usize.html'>usize</a>) -&gt; <a class='enum' href='https://doc.rust-lang.org/nightly/core/result/enum.Result.html' title='core::result::Result'>Result</a>&lt;<a class='struct' href='../reustmann/struct.Interpreter.html' title='reustmann::Interpreter'>Interpreter</a>, &amp;'static <a class='primitive' href='https://doc.rust-lang.org/nightly/std/primitive.str.html'>str</a>&gt;</code></h4>
 <div class='docblock'><p>Construct a new Interpreter with an existing Program.</p>
 
 <p><code>arch_length</code> need to be in the range <code>[1..2^32)</code>
@@ -95,6 +96,8 @@ if you don&#39;t want to give input and/or output.</p>
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 

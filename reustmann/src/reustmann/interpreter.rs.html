@@ -594,7 +594,7 @@
             <span class='ident'>memory</span>: <span class='ident'>memory</span>,
             <span class='ident'>pc</span>: <span class='number'>0</span>,
             <span class='ident'>sp</span>: <span class='number'>0</span>,
-            <span class='ident'>nz</span>: <span class='boolval'>false</span>
+            <span class='ident'>nz</span>: <span class='boolvalue'>false</span>
         })
     }
 
@@ -627,8 +627,8 @@
     <span class='kw'>pub</span> <span class='kw'>fn</span> <span class='ident'>reset</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>) <span class='op'>-&gt;</span> <span class='ident'>Statement</span> {
         <span class='self'>self</span>.<span class='ident'>pc</span> <span class='op'>=</span> <span class='number'>0</span>;
         <span class='self'>self</span>.<span class='ident'>sp</span> <span class='op'>=</span> <span class='number'>0</span>;
-        <span class='self'>self</span>.<span class='ident'>nz</span> <span class='op'>=</span> <span class='boolval'>false</span>;
-        <span class='ident'>Statement</span>(<span class='ident'>RESET</span>, <span class='boolval'>true</span>)
+        <span class='self'>self</span>.<span class='ident'>nz</span> <span class='op'>=</span> <span class='boolvalue'>false</span>;
+        <span class='ident'>Statement</span>(<span class='ident'>RESET</span>, <span class='boolvalue'>true</span>)
     }
 
     <span class='attribute'>#[<span class='ident'>inline</span>]</span>
@@ -666,13 +666,13 @@
     <span class='kw'>fn</span> <span class='ident'>execute</span><span class='op'>&lt;</span><span class='ident'>R</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>Read</span>, <span class='ident'>W</span>: ?<span class='ident'>Sized</span> <span class='op'>+</span> <span class='ident'>Write</span><span class='op'>&gt;</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='self'>self</span>, <span class='ident'>op</span>: <span class='ident'>OpCode</span>, <span class='ident'>input</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>R</span>, <span class='ident'>output</span>: <span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>W</span>) <span class='op'>-&gt;</span> <span class='ident'>Statement</span> {
         <span class='kw'>match</span> <span class='ident'>op</span> {
             <span class='ident'>RESET</span> <span class='op'>=&gt;</span> <span class='self'>self</span>.<span class='ident'>reset</span>(),
-            <span class='ident'>HALT</span> <span class='op'>=&gt;</span> <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>),
+            <span class='ident'>HALT</span> <span class='op'>=&gt;</span> <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>),
             <span class='ident'>IN</span> <span class='op'>=&gt;</span> {
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>status</span> <span class='op'>=</span> <span class='boolval'>true</span>;
+                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>status</span> <span class='op'>=</span> <span class='boolvalue'>true</span>;
                 <span class='self'>self</span>.<span class='ident'>decrement_sp</span>();
                 <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>buffer</span> <span class='op'>=</span> [<span class='number'>0</span>; <span class='number'>1</span>];
                 <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Err</span>(_) <span class='op'>=</span> <span class='ident'>input</span>.<span class='ident'>read</span>(<span class='kw-2'>&amp;</span><span class='kw-2'>mut</span> <span class='ident'>buffer</span>) { <span class='comment'>// FIXME save/return error ???</span>
-                    <span class='ident'>status</span> <span class='op'>=</span> <span class='boolval'>false</span>;
+                    <span class='ident'>status</span> <span class='op'>=</span> <span class='boolvalue'>false</span>;
                 }
                 <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>] <span class='op'>=</span> <span class='ident'>buffer</span>[<span class='number'>0</span>];
                 <span class='self'>self</span>.<span class='ident'>set_nz</span>(<span class='ident'>buffer</span>[<span class='number'>0</span>]);
@@ -680,10 +680,10 @@
                 <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='ident'>status</span>)
             },
             <span class='ident'>OUT</span> <span class='op'>=&gt;</span> {
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>status</span> <span class='op'>=</span> <span class='boolval'>true</span>;
+                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>status</span> <span class='op'>=</span> <span class='boolvalue'>true</span>;
                 <span class='kw'>let</span> <span class='ident'>val</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>];
                 <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Err</span>(_) <span class='op'>=</span> <span class='ident'>output</span>.<span class='ident'>write</span>(<span class='kw-2'>&amp;</span>[<span class='ident'>val</span>]) { <span class='comment'>// FIXME save/return error ???</span>
-                    <span class='ident'>status</span> <span class='op'>=</span> <span class='boolval'>false</span>;
+                    <span class='ident'>status</span> <span class='op'>=</span> <span class='boolvalue'>false</span>;
                 }
                 <span class='self'>self</span>.<span class='ident'>set_nz</span>(<span class='ident'>val</span>);
                 <span class='self'>self</span>.<span class='ident'>increment_sp</span>();
@@ -695,7 +695,7 @@
                 <span class='self'>self</span>.<span class='ident'>set_nz</span>(<span class='ident'>val</span>);
                 <span class='self'>self</span>.<span class='ident'>increment_sp</span>();
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>DUP</span> <span class='op'>=&gt;</span> {
                 <span class='kw'>let</span> <span class='ident'>tmp</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>];
@@ -703,7 +703,7 @@
                 <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>] <span class='op'>=</span> <span class='ident'>tmp</span>;
                 <span class='self'>self</span>.<span class='ident'>set_nz</span>(<span class='ident'>tmp</span>);
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>PUSHPC</span> <span class='op'>=&gt;</span> {
                 <span class='comment'>// let val = self.trunc(self.pc);</span>
@@ -712,17 +712,17 @@
                 <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>] <span class='op'>=</span> <span class='ident'>val</span>;
                 <span class='self'>self</span>.<span class='ident'>set_nz</span>(<span class='ident'>val</span>);
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>POPPC</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>pc</span> <span class='op'>=</span> (<span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>] <span class='kw'>as</span> <span class='ident'>usize</span>) <span class='op'>%</span> <span class='self'>self</span>.<span class='ident'>memory</span>.<span class='ident'>len</span>();
                 <span class='self'>self</span>.<span class='ident'>increment_sp</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>POPSP</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>sp</span> <span class='op'>=</span> (<span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>] <span class='kw'>as</span> <span class='ident'>usize</span>) <span class='op'>%</span> <span class='self'>self</span>.<span class='ident'>memory</span>.<span class='ident'>len</span>();
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>SPTGT</span> <span class='op'>=&gt;</span> {
                 <span class='comment'>// find the next TARGET</span>
@@ -735,7 +735,7 @@
                     }
                 }
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>PUSHNZ</span> <span class='op'>=&gt;</span> {
                 <span class='kw'>let</span> <span class='ident'>val</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>nz</span> <span class='kw'>as</span> <span class='ident'>u8</span>;
@@ -743,7 +743,7 @@
                 <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>] <span class='op'>=</span> <span class='ident'>val</span>;
                 <span class='self'>self</span>.<span class='ident'>set_nz</span>(<span class='ident'>val</span>);
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>SWAP</span> <span class='op'>=&gt;</span> {
                 <span class='kw'>let</span> <span class='ident'>tmp</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>];
@@ -751,7 +751,7 @@
                 <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>] <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>memory</span>[(<span class='self'>self</span>.<span class='ident'>sp</span> <span class='op'>+</span> <span class='number'>1</span>) <span class='op'>%</span> <span class='ident'>arch_len</span>];
                 <span class='self'>self</span>.<span class='ident'>memory</span>[(<span class='self'>self</span>.<span class='ident'>sp</span> <span class='op'>+</span> <span class='number'>1</span>) <span class='op'>%</span> <span class='ident'>arch_len</span>] <span class='op'>=</span> <span class='ident'>tmp</span>;
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>PUSH0</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>decrement_sp</span>();
@@ -759,7 +759,7 @@
                 <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>] <span class='op'>=</span> <span class='ident'>val</span>;
                 <span class='self'>self</span>.<span class='ident'>set_nz</span>(<span class='ident'>val</span>);
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>ADD</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>decrement_sp</span>();
@@ -769,7 +769,7 @@
                 <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>] <span class='op'>=</span> <span class='ident'>val</span>;
                 <span class='self'>self</span>.<span class='ident'>set_nz</span>(<span class='ident'>val</span>);
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>SUB</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>decrement_sp</span>();
@@ -779,21 +779,21 @@
                 <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>] <span class='op'>=</span> <span class='ident'>val</span>;
                 <span class='self'>self</span>.<span class='ident'>set_nz</span>(<span class='ident'>val</span>);
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>INC</span> <span class='op'>=&gt;</span> {
                 <span class='kw'>let</span> <span class='ident'>val</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>].<span class='ident'>wrapping_add</span>(<span class='number'>1</span>);
                 <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>] <span class='op'>=</span> <span class='ident'>val</span>;
                 <span class='self'>self</span>.<span class='ident'>set_nz</span>(<span class='ident'>val</span>);
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>DEC</span> <span class='op'>=&gt;</span> {
                 <span class='kw'>let</span> <span class='ident'>val</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>].<span class='ident'>wrapping_sub</span>(<span class='number'>1</span>);
                 <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>] <span class='op'>=</span> <span class='ident'>val</span>;
                 <span class='self'>self</span>.<span class='ident'>set_nz</span>(<span class='ident'>val</span>);
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>MUL</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>decrement_sp</span>();
@@ -803,7 +803,7 @@
                 <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>] <span class='op'>=</span> <span class='ident'>val</span>;
                 <span class='self'>self</span>.<span class='ident'>set_nz</span>(<span class='ident'>val</span>);
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>DIV</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>decrement_sp</span>();
@@ -813,7 +813,7 @@
                 <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>] <span class='op'>=</span> <span class='ident'>val</span>;
                 <span class='self'>self</span>.<span class='ident'>set_nz</span>(<span class='ident'>val</span>);
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>XOR</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>decrement_sp</span>();
@@ -823,7 +823,7 @@
                 <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>] <span class='op'>=</span> <span class='ident'>val</span>;
                 <span class='self'>self</span>.<span class='ident'>set_nz</span>(<span class='ident'>val</span>);
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>AND</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>decrement_sp</span>();
@@ -833,7 +833,7 @@
                 <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>] <span class='op'>=</span> <span class='ident'>val</span>;
                 <span class='self'>self</span>.<span class='ident'>set_nz</span>(<span class='ident'>val</span>);
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>OR</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>decrement_sp</span>();
@@ -843,42 +843,42 @@
                 <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>] <span class='op'>=</span> <span class='ident'>val</span>;
                 <span class='self'>self</span>.<span class='ident'>set_nz</span>(<span class='ident'>val</span>);
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>SHL</span> <span class='op'>=&gt;</span> {
                 <span class='kw'>let</span> <span class='ident'>val</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>] <span class='op'>&lt;&lt;</span> <span class='number'>1</span>;
                 <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>] <span class='op'>=</span> <span class='ident'>val</span>;
                 <span class='self'>self</span>.<span class='ident'>set_nz</span>(<span class='ident'>val</span>);
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>SHR</span> <span class='op'>=&gt;</span> {
                 <span class='kw'>let</span> <span class='ident'>val</span> <span class='op'>=</span> <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>] <span class='op'>&gt;&gt;</span> <span class='number'>1</span>;
                 <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>] <span class='op'>=</span> <span class='ident'>val</span>;
                 <span class='self'>self</span>.<span class='ident'>set_nz</span>(<span class='ident'>val</span>);
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>NOT</span> <span class='op'>=&gt;</span> {
                 <span class='kw'>let</span> <span class='ident'>val</span> <span class='op'>=</span> <span class='op'>!</span><span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>];
                 <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='self'>self</span>.<span class='ident'>sp</span>] <span class='op'>=</span> <span class='ident'>val</span>;
                 <span class='self'>self</span>.<span class='ident'>set_nz</span>(<span class='ident'>val</span>);
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>BZ</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>nz</span> <span class='op'>==</span> <span class='boolval'>false</span> {
+                <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>nz</span> <span class='op'>==</span> <span class='boolvalue'>false</span> {
                     <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
                 }
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>BNZ</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>nz</span> <span class='op'>==</span> <span class='boolval'>true</span> {
+                <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>nz</span> <span class='op'>==</span> <span class='boolvalue'>true</span> {
                     <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
                 }
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>BEQ</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
@@ -887,7 +887,7 @@
                 <span class='kw'>if</span> <span class='ident'>a</span> <span class='op'>==</span> <span class='ident'>b</span> {
                     <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
                 }
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>BGT</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
@@ -896,7 +896,7 @@
                 <span class='kw'>if</span> <span class='ident'>a</span> <span class='op'>&gt;</span> <span class='ident'>b</span> {
                     <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
                 }
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>BLT</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
@@ -905,7 +905,7 @@
                 <span class='kw'>if</span> <span class='ident'>a</span> <span class='op'>&lt;</span> <span class='ident'>b</span> {
                     <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
                 }
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>BGE</span> <span class='op'>=&gt;</span> { <span class='comment'>// FIXME add BLE</span>
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
@@ -914,103 +914,103 @@
                 <span class='kw'>if</span> <span class='ident'>a</span> <span class='op'>&gt;=</span> <span class='ident'>b</span> {
                     <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
                 }
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>LOOP</span> <span class='op'>=&gt;</span> {
                 <span class='comment'>// logic is in the EndL opcode</span>
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>ENDL</span> <span class='op'>=&gt;</span> {
                 <span class='comment'>// find the preceding LOOP</span>
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>found</span> <span class='op'>=</span> <span class='boolval'>false</span>;
+                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>found</span> <span class='op'>=</span> <span class='boolvalue'>false</span>;
                 <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> (<span class='number'>0</span>..<span class='self'>self</span>.<span class='ident'>pc</span>).<span class='ident'>rev</span>() {
                     <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='ident'>i</span>] <span class='op'>==</span> <span class='ident'>LOOP</span> {
                         <span class='self'>self</span>.<span class='ident'>pc</span> <span class='op'>=</span> (<span class='ident'>i</span> <span class='op'>+</span> <span class='number'>1</span>) <span class='op'>%</span> <span class='self'>self</span>.<span class='ident'>memory</span>.<span class='ident'>len</span>();
-                        <span class='ident'>found</span> <span class='op'>=</span> <span class='boolval'>true</span>;
+                        <span class='ident'>found</span> <span class='op'>=</span> <span class='boolvalue'>true</span>;
                         <span class='kw'>break</span>;
                     }
                 }
-                <span class='kw'>if</span> <span class='ident'>found</span> <span class='op'>==</span> <span class='boolval'>false</span> {
+                <span class='kw'>if</span> <span class='ident'>found</span> <span class='op'>==</span> <span class='boolvalue'>false</span> {
                     <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
                 }
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>BRAN</span> <span class='op'>=&gt;</span> {
                 <span class='comment'>// find the next TARGET</span>
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>found</span> <span class='op'>=</span> <span class='boolval'>false</span>;
+                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>found</span> <span class='op'>=</span> <span class='boolvalue'>false</span>;
                 <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>pc</span> <span class='op'>&lt;</span> <span class='self'>self</span>.<span class='ident'>memory</span>.<span class='ident'>len</span>() <span class='op'>-</span> <span class='number'>1</span> {
                     <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> <span class='self'>self</span>.<span class='ident'>pc</span> <span class='op'>+</span> <span class='number'>1</span>..<span class='self'>self</span>.<span class='ident'>memory</span>.<span class='ident'>len</span>() {
                         <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='ident'>i</span>] <span class='op'>==</span> <span class='ident'>TARGET</span> {
                             <span class='self'>self</span>.<span class='ident'>sp</span> <span class='op'>=</span> <span class='ident'>i</span>;
-                            <span class='ident'>found</span> <span class='op'>=</span> <span class='boolval'>true</span>;
+                            <span class='ident'>found</span> <span class='op'>=</span> <span class='boolvalue'>true</span>;
                             <span class='kw'>break</span>;
                         }
                     }
                 }
-                <span class='kw'>if</span> <span class='ident'>found</span> <span class='op'>==</span> <span class='boolval'>false</span> {
+                <span class='kw'>if</span> <span class='ident'>found</span> <span class='op'>==</span> <span class='boolvalue'>false</span> {
                     <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
                 }
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>BRAP</span> <span class='op'>=&gt;</span> {
                 <span class='comment'>// find the preceding TARGET</span>
-                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>found</span> <span class='op'>=</span> <span class='boolval'>false</span>;
+                <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>found</span> <span class='op'>=</span> <span class='boolvalue'>false</span>;
                 <span class='kw'>for</span> <span class='ident'>i</span> <span class='kw'>in</span> (<span class='number'>0</span>..<span class='self'>self</span>.<span class='ident'>pc</span>).<span class='ident'>rev</span>() {
                     <span class='kw'>if</span> <span class='self'>self</span>.<span class='ident'>memory</span>[<span class='ident'>i</span>] <span class='op'>==</span> <span class='ident'>TARGET</span> {
                         <span class='self'>self</span>.<span class='ident'>pc</span> <span class='op'>=</span> (<span class='ident'>i</span> <span class='op'>+</span> <span class='number'>1</span>) <span class='op'>%</span> <span class='self'>self</span>.<span class='ident'>memory</span>.<span class='ident'>len</span>();
-                        <span class='ident'>found</span> <span class='op'>=</span> <span class='boolval'>true</span>;
+                        <span class='ident'>found</span> <span class='op'>=</span> <span class='boolvalue'>true</span>;
                         <span class='kw'>break</span>;
                     }
                 }
-                <span class='kw'>if</span> <span class='ident'>found</span> <span class='op'>==</span> <span class='boolval'>false</span> {
+                <span class='kw'>if</span> <span class='ident'>found</span> <span class='op'>==</span> <span class='boolvalue'>false</span> {
                     <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
                 }
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>TARGET</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>SKIP1</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>increment_pc_n</span>(<span class='number'>2</span>);
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>SKIP2</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>increment_pc_n</span>(<span class='number'>3</span>);
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>SKIP3</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>increment_pc_n</span>(<span class='number'>4</span>);
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>SKIP4</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>increment_pc_n</span>(<span class='number'>5</span>);
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>SKIP5</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>increment_pc_n</span>(<span class='number'>6</span>);
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>SKIP6</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>increment_pc_n</span>(<span class='number'>7</span>);
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>SKIP7</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>increment_pc_n</span>(<span class='number'>8</span>);
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>SKIP8</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>increment_pc_n</span>(<span class='number'>9</span>);
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>SKIP9</span> <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>increment_pc_n</span>(<span class='number'>10</span>);
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
             <span class='ident'>NOP</span> <span class='op'>|</span> _ <span class='op'>=&gt;</span> {
                 <span class='self'>self</span>.<span class='ident'>increment_pc</span>();
-                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolval'>true</span>)
+                <span class='ident'>Statement</span>(<span class='ident'>op</span>, <span class='boolvalue'>true</span>)
             },
         }
     }
@@ -1057,6 +1057,8 @@
                     <dd>Move down in search results</dd>
                     <dt>&#9166;</dt>
                     <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
                 </dl>
             </div>
 
