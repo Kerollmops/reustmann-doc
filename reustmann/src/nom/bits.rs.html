@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/nom-1.2.3/src/bits.rs`.">
+    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/nom-1.2.4/src/bits.rs`.">
     <meta name="keywords" content="rust, rustlang, rust-lang">
 
     <title>bits.rs.html -- source</title>
@@ -278,7 +278,7 @@
 
 
 <span class='doccomment'>/// `bits!( parser ) =&gt; ( &amp;[u8], (&amp;[u8], usize) -&gt; IResult&lt;(&amp;[u8], usize), T&gt; ) -&gt; IResult&lt;&amp;[u8], T&gt;`</span>
-<span class='doccomment'>/// transforms its byte slice input in a bit stream for the underlying parsers</span>
+<span class='doccomment'>/// transforms its byte slice input into a bit stream for the underlying parsers</span>
 <span class='doccomment'>///</span>
 <span class='doccomment'>/// ```</span>
 <span class='doccomment'>/// # #[macro_use] extern crate nom;</span>
@@ -369,14 +369,14 @@
           <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>remaining</span>: <span class='ident'>usize</span>  <span class='op'>=</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>count</span>;
           <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>end_offset</span>: <span class='ident'>usize</span> <span class='op'>=</span> <span class='number'>0</span>;
 
-          <span class='kw'>for</span> <span class='ident'>it</span> <span class='kw'>in</span> <span class='number'>0</span>..<span class='ident'>cnt</span><span class='op'>+</span><span class='number'>1</span> {
+          <span class='kw'>for</span> <span class='ident'>byte</span> <span class='kw'>in</span> <span class='ident'>input</span>.<span class='ident'>iter</span>().<span class='ident'>take</span>(<span class='ident'>cnt</span> <span class='op'>+</span> <span class='number'>1</span>) {
             <span class='kw'>if</span> <span class='ident'>remaining</span> <span class='op'>==</span> <span class='number'>0</span> {
               <span class='kw'>break</span>;
             }
             <span class='kw'>let</span> <span class='ident'>val</span>: <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ident'>offset</span> <span class='op'>==</span> <span class='number'>0</span> {
-              <span class='ident'>input</span>[<span class='ident'>it</span>] <span class='kw'>as</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>
+              <span class='op'>*</span><span class='ident'>byte</span> <span class='kw'>as</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>
             } <span class='kw'>else</span> {
-              ((<span class='ident'>input</span>[<span class='ident'>it</span>] <span class='op'>&lt;&lt;</span> <span class='ident'>offset</span>) <span class='kw'>as</span> <span class='ident'>u8</span> <span class='op'>&gt;&gt;</span> <span class='ident'>offset</span>) <span class='kw'>as</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>
+              ((<span class='op'>*</span><span class='ident'>byte</span> <span class='op'>&lt;&lt;</span> <span class='ident'>offset</span>) <span class='kw'>as</span> <span class='ident'>u8</span> <span class='op'>&gt;&gt;</span> <span class='ident'>offset</span>) <span class='kw'>as</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>t</span>
             };
 
             <span class='kw'>if</span> <span class='ident'>remaining</span> <span class='op'>&lt;</span> <span class='number'>8</span> <span class='op'>-</span> <span class='ident'>offset</span> {
@@ -384,7 +384,7 @@
               <span class='ident'>end_offset</span> <span class='op'>=</span> <span class='ident'>remaining</span> <span class='op'>+</span> <span class='ident'>offset</span>;
               <span class='kw'>break</span>;
             } <span class='kw'>else</span> {
-              <span class='ident'>acc</span> <span class='op'>+=</span> <span class='ident'>val</span> <span class='op'>&lt;&lt;</span> <span class='ident'>remaining</span> <span class='op'>-</span> (<span class='number'>8</span> <span class='op'>-</span> <span class='ident'>offset</span>);
+              <span class='ident'>acc</span> <span class='op'>+=</span> <span class='ident'>val</span> <span class='op'>&lt;&lt;</span> (<span class='ident'>remaining</span> <span class='op'>-</span> (<span class='number'>8</span> <span class='op'>-</span> <span class='ident'>offset</span>));
               <span class='ident'>remaining</span> <span class='op'>-=</span> <span class='number'>8</span> <span class='op'>-</span> <span class='ident'>offset</span>;
               <span class='ident'>offset</span> <span class='op'>=</span> <span class='number'>0</span>;
             }

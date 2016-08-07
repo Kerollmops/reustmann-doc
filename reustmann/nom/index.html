@@ -180,7 +180,7 @@ is almost always the case for parsing programming languages).</p>
                                   title='nom::bits!'>bits!</a></td>
                            <td class='docblock short'>
                                 <p><code>bits!( parser ) =&gt; ( &amp;[u8], (&amp;[u8], usize) -&gt; IResult&lt;(&amp;[u8], usize), T&gt; ) -&gt; IResult&lt;&amp;[u8], T&gt;</code>
-transforms its byte slice input in a bit stream for the underlying parsers</p>
+transforms its byte slice input into a bit stream for the underlying parsers</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -514,6 +514,15 @@ maps a function returning a Result on the output of a parser</p>
                                   title='nom::none_of!'>none_of!</a></td>
                            <td class='docblock short'>
                                 <p>matches anything but the provided characters</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='macro' href='macro.not!.html'
+                                  title='nom::not!'>not!</a></td>
+                           <td class='docblock short'>
+                                <p><code>not!(I -&gt; IResult&lt;I,0&gt;) =&gt; I -&gt; IResult&lt;I, O&gt;</code>
+returns a result only if the embedded parser returns Error or Incomplete
+does not consume the input</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -1201,6 +1210,20 @@ otherwise a little endian u64 integer</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
+                           <td><a class='fn' href='fn.le_f32.html'
+                                  title='nom::le_f32'>le_f32</a></td>
+                           <td class='docblock short'>
+                                <p>Recognizes little endian 4 bytes floating point number</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.le_f64.html'
+                                  title='nom::le_f64'>le_f64</a></td>
+                           <td class='docblock short'>
+                                <p>Recognizes little endian 8 bytes floating point number</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
                            <td><a class='fn' href='fn.le_i16.html'
                                   title='nom::le_i16'>le_i16</a></td>
                            <td class='docblock short'>
@@ -1352,6 +1375,13 @@ otherwise a little endian u64 integer</p>
                                   title='nom::rest'>rest</a></td>
                            <td class='docblock short'>
                                 <p>Return the remaining input.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class='fn' href='fn.rest_s.html'
+                                  title='nom::rest_s'>rest_s</a></td>
+                           <td class='docblock short'>
+                                <p>Return the remaining input, for strings.</p>
                            </td>
                        </tr>
                        <tr class=' module-item'>
