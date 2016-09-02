@@ -1197,9 +1197,9 @@
       <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>InputLength</span>;
       <span class='kw'>let</span> <span class='ident'>res</span>: <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>IResult</span><span class='op'>&lt;</span>_,_<span class='op'>&gt;</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>input</span>.<span class='ident'>iter</span>().<span class='ident'>position</span>(<span class='op'>|</span><span class='ident'>c</span><span class='op'>|</span> {
         <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='ident'>i</span> <span class='kw'>in</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>bytes</span>.<span class='ident'>iter</span>() {
-          <span class='kw'>if</span> <span class='op'>*</span><span class='ident'>c</span> <span class='op'>==</span> <span class='ident'>i</span> { <span class='kw'>return</span> <span class='boolvalue'>true</span> }
+          <span class='kw'>if</span> <span class='op'>*</span><span class='ident'>c</span> <span class='op'>==</span> <span class='ident'>i</span> { <span class='kw'>return</span> <span class='bool-val'>true</span> }
         }
-        <span class='boolvalue'>false</span>
+        <span class='bool-val'>false</span>
       }) {
         <span class='prelude-val'>Some</span>(<span class='number'>0</span>) <span class='op'>=&gt;</span> <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>IResult</span>::<span class='ident'>Error</span>(<span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='prelude-val'>Err</span>::<span class='macro-nonterminal'>Position</span>(<span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>ErrorKind</span>::<span class='ident'>IsNot</span>,<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>input</span>)),
         <span class='prelude-val'>Some</span>(<span class='ident'>n</span>) <span class='op'>=&gt;</span> {
@@ -1256,9 +1256,9 @@
       <span class='kw'>use</span> <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>InputLength</span>;
       <span class='kw'>let</span> <span class='ident'>res</span>: <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>IResult</span><span class='op'>&lt;</span>_,_<span class='op'>&gt;</span> <span class='op'>=</span> <span class='kw'>match</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>input</span>.<span class='ident'>iter</span>().<span class='ident'>position</span>(<span class='op'>|</span><span class='ident'>c</span><span class='op'>|</span> {
         <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='ident'>i</span> <span class='kw'>in</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>bytes</span>.<span class='ident'>iter</span>() {
-          <span class='kw'>if</span> <span class='op'>*</span><span class='ident'>c</span> <span class='op'>==</span> <span class='ident'>i</span> { <span class='kw'>return</span> <span class='boolvalue'>false</span> }
+          <span class='kw'>if</span> <span class='op'>*</span><span class='ident'>c</span> <span class='op'>==</span> <span class='ident'>i</span> { <span class='kw'>return</span> <span class='bool-val'>false</span> }
         }
-        <span class='boolvalue'>true</span>
+        <span class='bool-val'>true</span>
       }) {
         <span class='prelude-val'>Some</span>(<span class='number'>0</span>) <span class='op'>=&gt;</span> <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>IResult</span>::<span class='ident'>Error</span>(<span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='prelude-val'>Err</span>::<span class='macro-nonterminal'>Position</span>(<span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>ErrorKind</span>::<span class='ident'>IsA</span>,<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>input</span>)),
         <span class='prelude-val'>Some</span>(<span class='ident'>n</span>) <span class='op'>=&gt;</span> {
@@ -1636,7 +1636,7 @@
         <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>IResult</span>::<span class='ident'>Incomplete</span>(<span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>Needed</span>::<span class='ident'>Size</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>bytes</span>.<span class='ident'>len</span>()))
       } <span class='kw'>else</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>index</span>  <span class='op'>=</span> <span class='number'>0</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>parsed</span> <span class='op'>=</span> <span class='boolvalue'>false</span>;
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>parsed</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
 
         <span class='kw'>for</span> <span class='ident'>idx</span> <span class='kw'>in</span> <span class='number'>0</span>..<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>i</span>.<span class='ident'>len</span>() {
           <span class='kw'>if</span> <span class='ident'>idx</span> <span class='op'>+</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>bytes</span>.<span class='ident'>len</span>() <span class='op'>&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>i</span>.<span class='ident'>len</span>() {
@@ -1644,7 +1644,7 @@
             <span class='kw'>break</span>;
           }
           <span class='kw'>if</span> <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>i</span>[<span class='ident'>idx</span>..<span class='ident'>idx</span> <span class='op'>+</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>bytes</span>.<span class='ident'>len</span>()] <span class='op'>==</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>bytes</span> {
-            <span class='ident'>parsed</span> <span class='op'>=</span> <span class='boolvalue'>true</span>;
+            <span class='ident'>parsed</span> <span class='op'>=</span> <span class='bool-val'>true</span>;
             <span class='ident'>index</span> <span class='op'>=</span> <span class='ident'>idx</span>;
             <span class='kw'>break</span>;
           }
@@ -1688,7 +1688,7 @@
         <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>IResult</span>::<span class='ident'>Incomplete</span>(<span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>Needed</span>::<span class='ident'>Size</span>(<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>bytes</span>.<span class='ident'>len</span>()))
       } <span class='kw'>else</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>index</span>  <span class='op'>=</span> <span class='number'>0</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>parsed</span> <span class='op'>=</span> <span class='boolvalue'>false</span>;
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>parsed</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
 
         <span class='kw'>for</span> <span class='ident'>idx</span> <span class='kw'>in</span> <span class='number'>0</span>..<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>i</span>.<span class='ident'>len</span>() {
           <span class='kw'>if</span> <span class='ident'>idx</span> <span class='op'>+</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>bytes</span>.<span class='ident'>len</span>() <span class='op'>&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>i</span>.<span class='ident'>len</span>() {
@@ -1696,7 +1696,7 @@
             <span class='kw'>break</span>;
           }
           <span class='kw'>if</span> <span class='kw-2'>&amp;</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>i</span>[<span class='ident'>idx</span>..<span class='ident'>idx</span><span class='op'>+</span><span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>bytes</span>.<span class='ident'>len</span>()] <span class='op'>==</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>bytes</span> {
-            <span class='ident'>parsed</span> <span class='op'>=</span> <span class='boolvalue'>true</span>;
+            <span class='ident'>parsed</span> <span class='op'>=</span> <span class='bool-val'>true</span>;
             <span class='ident'>index</span>  <span class='op'>=</span> <span class='ident'>idx</span>;
             <span class='kw'>break</span>;
           }
@@ -1740,7 +1740,7 @@
         <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>IResult</span>::<span class='ident'>Incomplete</span>(<span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>Needed</span>::<span class='ident'>Size</span>(<span class='number'>1</span>))
       } <span class='kw'>else</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>index</span>  <span class='op'>=</span> <span class='number'>0</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>parsed</span> <span class='op'>=</span> <span class='boolvalue'>false</span>;
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>parsed</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
 
         <span class='kw'>for</span> <span class='ident'>idx</span> <span class='kw'>in</span> <span class='number'>0</span>..<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>i</span>.<span class='ident'>len</span>() {
           <span class='kw'>if</span> <span class='ident'>idx</span> <span class='op'>+</span> <span class='number'>1</span> <span class='op'>&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>i</span>.<span class='ident'>len</span>() {
@@ -1749,7 +1749,7 @@
           }
           <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='ident'>t</span> <span class='kw'>in</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>bytes</span>.<span class='ident'>iter</span>() {
             <span class='kw'>if</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>i</span>[<span class='ident'>idx</span>] <span class='op'>==</span> <span class='ident'>t</span> {
-              <span class='ident'>parsed</span> <span class='op'>=</span> <span class='boolvalue'>true</span>;
+              <span class='ident'>parsed</span> <span class='op'>=</span> <span class='bool-val'>true</span>;
               <span class='ident'>index</span> <span class='op'>=</span> <span class='ident'>idx</span>;
               <span class='kw'>break</span>;
             }
@@ -1794,7 +1794,7 @@
         <span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>IResult</span>::<span class='ident'>Incomplete</span>(<span class='macro-nonterminal'>$</span><span class='kw'>crate</span>::<span class='macro-nonterminal'>Needed</span>::<span class='ident'>Size</span>(<span class='number'>1</span>))
       } <span class='kw'>else</span> {
         <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>index</span>  <span class='op'>=</span> <span class='number'>0</span>;
-        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>parsed</span> <span class='op'>=</span> <span class='boolvalue'>false</span>;
+        <span class='kw'>let</span> <span class='kw-2'>mut</span> <span class='ident'>parsed</span> <span class='op'>=</span> <span class='bool-val'>false</span>;
 
         <span class='kw'>for</span> <span class='ident'>idx</span> <span class='kw'>in</span> <span class='number'>0</span>..<span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>i</span>.<span class='ident'>len</span>() {
           <span class='kw'>if</span> <span class='ident'>idx</span> <span class='op'>+</span> <span class='number'>1</span> <span class='op'>&gt;</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>i</span>.<span class='ident'>len</span>() {
@@ -1803,7 +1803,7 @@
           }
           <span class='kw'>for</span> <span class='kw-2'>&amp;</span><span class='ident'>t</span> <span class='kw'>in</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>bytes</span>.<span class='ident'>iter</span>() {
             <span class='kw'>if</span> <span class='macro-nonterminal'>$</span><span class='macro-nonterminal'>i</span>[<span class='ident'>idx</span>] <span class='op'>==</span> <span class='ident'>t</span> {
-              <span class='ident'>parsed</span> <span class='op'>=</span> <span class='boolvalue'>true</span>;
+              <span class='ident'>parsed</span> <span class='op'>=</span> <span class='bool-val'>true</span>;
               <span class='ident'>index</span> <span class='op'>=</span> <span class='ident'>idx</span>;
               <span class='kw'>break</span>;
             }

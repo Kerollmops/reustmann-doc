@@ -108,7 +108,7 @@
         }
 
         <span class='comment'>// FIXME use not_line_ending from nom</span>
-        <span class='kw'>if</span> <span class='ident'>ignore_last_newline</span> <span class='op'>==</span> <span class='boolvalue'>true</span> {
+        <span class='kw'>if</span> <span class='ident'>ignore_last_newline</span> <span class='op'>==</span> <span class='bool-val'>true</span> {
             <span class='kw'>let</span> <span class='ident'>endl</span> <span class='op'>=</span> <span class='string'>&#39;\n&#39;</span> <span class='kw'>as</span> <span class='ident'>u8</span>;
             <span class='kw'>if</span> <span class='kw'>let</span> <span class='prelude-val'>Some</span>(<span class='kw-2'>&amp;</span><span class='ident'>endl</span>) <span class='op'>=</span> <span class='ident'>instructions</span>.<span class='ident'>last</span>() { <span class='comment'>// FIXME &#39;\r\n&#39; for windows</span>
                 <span class='ident'>instructions</span>.<span class='ident'>pop</span>();
